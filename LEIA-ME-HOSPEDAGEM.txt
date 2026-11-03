@@ -1,0 +1,42 @@
+TAMBORIM PARA TODOS - PACOTE PREPARADO PARA HOSPEDAGEM
+=========================================================
+
+Atualizações aplicadas neste pacote:
+
+- database/tamborim.sql atualizado para o novo sistema de recuperação por código;
+- database/tamborim_producao.sql criado para importação em banco vazio da hospedagem;
+- tabela autorizacoes_redefinicao_senha adicionada ao SQL principal;
+- config/db.php atualizado para utf8mb4 e horário America/Sao_Paulo / MySQL -03:00;
+- mensagem de erro do banco não expõe detalhes técnicos ao visitante;
+- logs temporários de diagnóstico removidos do AuthController e EmailService;
+- arquivos .bak e logs de debug removidos;
+- script antigo novasenha.js atualizado para o fluxo por código;
+- acesso HTTP às pastas app, config, database e vendor bloqueado por .htaccess;
+- pasta public/uploads protegida contra execução direta de scripts;
+- senha de aplicativo antiga removida de config/mail.php.
+
+ANTES DE HOSPEDAR
+-----------------
+
+1. Criar o banco MySQL no painel da hospedagem.
+2. Editar config/db.php com host, nome do banco, usuário e senha reais.
+   O arquivo config/db.producao.example.php mostra quais dados serão necessários.
+3. Importar database/tamborim_producao.sql em um banco VAZIO.
+4. Gerar uma NOVA senha de aplicativo para o e-mail e substituir
+   ALTERAR_ANTES_DE_HOSPEDAR em config/mail.php.
+5. Não compartilhar a nova senha de aplicativo em conversa, print ou arquivo público.
+6. Confirmar se a hospedagem permite o tamanho desejado para uploads.
+7. Depois do upload, testar cadastro, login, perfis, aulas, materiais e recuperação de senha.
+
+OBSERVAÇÃO SOBRE E-MAIL
+-----------------------
+
+O código PHP da recuperação está preparado, porém o SMTP ainda precisa ser testado
+fora da rede da 18ª CRE. O erro encontrado anteriormente foi bloqueio/conexão SMTP,
+não erro de sintaxe do PHP.
+
+OBSERVAÇÃO SOBRE O BANCO LOCAL
+------------------------------
+
+config/db.php continua com as credenciais locais (root / sem senha) para não quebrar
+o projeto antes da hospedagem. Elas DEVEM ser substituídas antes do upload final.
