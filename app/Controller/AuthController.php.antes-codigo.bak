@@ -1,0 +1,850 @@
+<?php
+
+require_once __DIR__ . "/../Models/Usuario.php";
+require_once __DIR__ . "/../Services/EmailService.php";
+
+class AuthController
+{
+    private $usuario;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CONSTRUTOR
+    |--------------------------------------------------------------------------
+    */
+
+    public function __construct()
+    {
+        global $pdo;
+
+        $this->usuario = new Usuario($pdo);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CADASTRO
+    |--------------------------------------------------------------------------
+    */
+
+    public function register()
+    {
+        $nome = trim($_POST["nome"] ?? "");
+        $email = trim($_POST["email"] ?? "");
+
+        $senha = $_POST["senha"] ?? "";
+        $confirmarSenha = $_POST["confirmarSenha"] ?? "";
+
+        $tipo = $_POST["tipo"] ?? "aluno";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CAMPOS OBRIGATÓRIOS
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $nome === "" ||
+            $email === "" ||
+            $senha === "" ||
+            $confirmarSenha === ""
+        ) {
+            header(
+                "Location: ../public/criar.php?status=empty"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | E-MAIL
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            !filter_var(
+                $email,
+                FILTER_VALIDATE_EMAIL
+            )
+        ) {
+            header(
+                "Location: ../public/criar.php?status=email"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | TIPO DE CONTA
+        |--------------------------------------------------------------------------
+        |
+        | Não permitimos criar administrador pelo cadastro público.
+        |
+        |--------------------------------------------------------------------------
+        */
+
+        $tiposPermitidos = [
+            "aluno",
+            "professor"
+        ];
+
+        if (
+            !in_array(
+                $tipo,
+                $tiposPermitidos,
+                true
+            )
+        ) {
+            $tipo = "aluno";
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SENHA
+        |--------------------------------------------------------------------------
+        */
+
+        if ($senha !== $confirmarSenha) {
+
+            header(
+                "Location: ../public/criar.php?status=password"
+            );
+
+            exit;
+        }
+
+
+        if (strlen($senha) < 6) {
+
+            header(
+                "Location: ../public/criar.php?status=passwordLength"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | E-MAIL JÁ CADASTRADO
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $this->usuario->buscarPorEmail(
+                $email
+            )
+        ) {
+            header(
+                "Location: ../public/criar.php?status=exists"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | STATUS DA CONTA
+        |--------------------------------------------------------------------------
+        |
+        | Aluno:
+        | ativo automaticamente.
+        |
+        | Professor:
+        | precisa da aprovação do administrador.
+        |
+        |--------------------------------------------------------------------------
+        */
+
+        if ($tipo === "professor") {
+
+            $status = "pendente";
+
+        } else {
+
+            $status = "ativo";
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CRIPTOGRAFIA
+        |--------------------------------------------------------------------------
+        */
+
+        $senhaHash = password_hash(
+            $senha,
+            PASSWORD_DEFAULT
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CADASTRAR
+        |--------------------------------------------------------------------------
+        */
+
+        $resultado =
+            $this->usuario->cadastrar(
+                $nome,
+                $email,
+                $senhaHash,
+                $tipo,
+                $status
+            );
+
+
+        if (!$resultado) {
+
+            header(
+                "Location: ../public/criar.php?status=error"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | REDIRECIONAMENTO
+        |--------------------------------------------------------------------------
+        */
+
+        if ($tipo === "professor") {
+
+            header(
+                "Location: ../public/login.php?status=teacherCreated"
+            );
+
+            exit;
+        }
+
+
+        header(
+            "Location: ../public/login.php?status=success"
+        );
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGIN
+    |--------------------------------------------------------------------------
+    */
+
+    public function login()
+    {
+        $perfil = $_POST["perfil"] ?? "";
+
+        $email = trim(
+            $_POST["email"] ?? ""
+        );
+
+        $senha =
+            $_POST["senha"] ?? "";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CAMPOS
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $perfil === "" ||
+            $email === "" ||
+            $senha === ""
+        ) {
+            header(
+                "Location: ../public/login.php?status=empty"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PERFIS PERMITIDOS
+        |--------------------------------------------------------------------------
+        */
+
+        $perfisPermitidos = [
+            "aluno",
+            "professor",
+            "admin"
+        ];
+
+
+        if (
+            !in_array(
+                $perfil,
+                $perfisPermitidos,
+                true
+            )
+        ) {
+            header(
+                "Location: ../public/login.php?status=profile"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | BUSCAR USUÁRIO
+        |--------------------------------------------------------------------------
+        */
+
+        $usuario =
+            $this->usuario->buscarPorEmail(
+                $email
+            );
+
+
+        if (!$usuario) {
+
+            header(
+                "Location: ../public/login.php?status=error"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SENHA
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            !password_verify(
+                $senha,
+                $usuario["senha"]
+            )
+        ) {
+            header(
+                "Location: ../public/login.php?status=error"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PERFIL ESCOLHIDO X PERFIL DA CONTA
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $usuario["tipo"] !==
+            $perfil
+        ) {
+            header(
+                "Location: ../public/login.php?status=profile"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PROFESSOR PENDENTE
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $usuario["tipo"] === "professor" &&
+            $usuario["status"] !== "ativo"
+        ) {
+            header(
+                "Location: ../public/login.php?status=pending"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SESSÃO
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            session_status() ===
+            PHP_SESSION_NONE
+        ) {
+            session_start();
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | REGENERA ID DA SESSÃO
+        |--------------------------------------------------------------------------
+        */
+
+        session_regenerate_id(true);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DADOS DA SESSÃO
+        |--------------------------------------------------------------------------
+        |
+        | IMPORTANTE:
+        |
+        | O status precisa ficar salvo porque páginas como:
+        |
+        | professor/painel.php
+        | professor/materiais.php
+        | professor/perfil.php
+        |
+        | verificam:
+        |
+        | $_SESSION["usuario"]["status"]
+        |
+        |--------------------------------------------------------------------------
+        */
+
+        $_SESSION["usuario"] = [
+
+            "id" =>
+                $usuario["id"],
+
+            "nome" =>
+                $usuario["nome"],
+
+            "email" =>
+                $usuario["email"],
+
+            "tipo" =>
+                $usuario["tipo"],
+
+            "status" =>
+                $usuario["status"]
+        ];
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | REDIRECIONAMENTO POR PERFIL
+        |--------------------------------------------------------------------------
+        */
+
+        switch ($usuario["tipo"]) {
+
+            case "admin":
+
+                header(
+                    "Location: ../public/admin/painel.php"
+                );
+
+                break;
+
+
+            case "professor":
+
+                header(
+                    "Location: ../public/professor/painel.php"
+                );
+
+                break;
+
+
+            case "aluno":
+
+                header(
+                    "Location: ../public/aluno/painel.php"
+                );
+
+                break;
+
+
+            default:
+
+                session_unset();
+                session_destroy();
+
+                header(
+                    "Location: ../public/login.php?status=error"
+                );
+
+                break;
+        }
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ESQUECI A SENHA
+    |--------------------------------------------------------------------------
+    */
+
+    public function forgotPassword()
+    {
+        $email = trim(
+            $_POST["email"] ?? ""
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CAMPO VAZIO
+        |--------------------------------------------------------------------------
+        */
+
+        if ($email === "") {
+
+            header(
+                "Location: ../public/esquece.php?status=empty"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | FORMATO DO E-MAIL
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            !filter_var(
+                $email,
+                FILTER_VALIDATE_EMAIL
+            )
+        ) {
+            header(
+                "Location: ../public/esquece.php?status=success"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | BUSCAR USUÁRIO
+        |--------------------------------------------------------------------------
+        */
+
+        $usuario =
+            $this->usuario->buscarPorEmail(
+                $email
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SEGURANÇA
+        |--------------------------------------------------------------------------
+        |
+        | Mesmo que o e-mail não exista,
+        | mostramos a mesma mensagem.
+        |
+        |--------------------------------------------------------------------------
+        */
+
+        if (!$usuario) {
+
+            header(
+                "Location: ../public/esquece.php?status=success"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | LIMPAR TOKENS ANTIGOS
+        |--------------------------------------------------------------------------
+        */
+
+        $this->usuario->removerTokensDoUsuario(
+            $usuario["id"]
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | TOKEN
+        |--------------------------------------------------------------------------
+        */
+
+        $token = bin2hex(
+            random_bytes(32)
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | EXPIRAÇÃO
+        |--------------------------------------------------------------------------
+        */
+
+        $expiracao = date(
+            "Y-m-d H:i:s",
+            strtotime("+1 hour")
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SALVAR TOKEN
+        |--------------------------------------------------------------------------
+        */
+
+        $salvo =
+            $this->usuario->salvarToken(
+                $usuario["id"],
+                $token,
+                $expiracao
+            );
+
+
+        if (!$salvo) {
+
+            header(
+                "Location: ../public/esquece.php?status=error"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | LINK
+        |--------------------------------------------------------------------------
+        */
+
+        $link =
+            "http://localhost/"
+            . "Tamborim%20Para%20Todos/"
+            . "public/novasenha.php"
+            . "?token="
+            . urlencode($token);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ENVIO DE E-MAIL
+        |--------------------------------------------------------------------------
+        */
+
+        try {
+
+            $emailService =
+                new EmailService();
+
+
+            $emailService->enviarRecuperacao(
+                $usuario["email"],
+                $usuario["nome"],
+                $link
+            );
+
+
+        } catch (Throwable $e) {
+
+            header(
+                "Location: ../public/esquece.php?status=error"
+            );
+
+            exit;
+        }
+
+
+        header(
+            "Location: ../public/esquece.php?status=success"
+        );
+
+        exit;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | REDEFINIR SENHA
+    |--------------------------------------------------------------------------
+    */
+
+    public function resetPassword()
+    {
+        $token =
+            $_POST["token"] ?? "";
+
+        $senha =
+            $_POST["senha"] ?? "";
+
+        $confirmarSenha =
+            $_POST["confirmarSenha"] ?? "";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CAMPOS
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $token === "" ||
+            $senha === "" ||
+            $confirmarSenha === ""
+        ) {
+            header(
+                "Location: ../public/novasenha.php"
+                . "?token="
+                . urlencode($token)
+                . "&status=error"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SENHAS DIFERENTES
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            $senha !==
+            $confirmarSenha
+        ) {
+            header(
+                "Location: ../public/novasenha.php"
+                . "?token="
+                . urlencode($token)
+                . "&status=password"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | TAMANHO
+        |--------------------------------------------------------------------------
+        */
+
+        if (strlen($senha) < 6) {
+
+            header(
+                "Location: ../public/novasenha.php"
+                . "?token="
+                . urlencode($token)
+                . "&status=passwordLength"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | BUSCAR TOKEN
+        |--------------------------------------------------------------------------
+        */
+
+        $dadosToken =
+            $this->usuario->buscarToken(
+                $token
+            );
+
+
+        if (!$dadosToken) {
+
+            header(
+                "Location: ../public/novasenha.php?status=expired"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | NOVA SENHA
+        |--------------------------------------------------------------------------
+        */
+
+        $senhaHash =
+            password_hash(
+                $senha,
+                PASSWORD_DEFAULT
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ATUALIZAR SENHA
+        |--------------------------------------------------------------------------
+        */
+
+        $atualizado =
+            $this->usuario->atualizarSenha(
+                $dadosToken["usuario_id"],
+                $senhaHash
+            );
+
+
+        if (!$atualizado) {
+
+            header(
+                "Location: ../public/novasenha.php"
+                . "?token="
+                . urlencode($token)
+                . "&status=error"
+            );
+
+            exit;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | INVALIDAR TOKEN
+        |--------------------------------------------------------------------------
+        */
+
+        $this->usuario->marcarTokenComoUsado(
+            $token
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | LOGIN
+        |--------------------------------------------------------------------------
+        */
+
+        header(
+            "Location: ../public/login.php?status=passwordChanged"
+        );
+
+        exit;
+    }
+}

@@ -1,0 +1,10 @@
+# Arquivos desta pasta são utilizados internamente pelo PHP.
+# O acesso direto pelo navegador é bloqueado.
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+    Deny from all
+</IfModule>

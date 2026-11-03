@@ -1,0 +1,93 @@
+<?php
+
+require_once __DIR__ . "/../../vendor/autoload.php";
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+class EmailService
+{
+    private PHPMailer $mail;
+
+    public function __construct()
+    {
+        $config = require __DIR__ . "/../../config/mail.php";
+
+        $this->mail = new PHPMailer(true);
+
+        $this->mail->isSMTP();
+
+        $this->mail->Host = $config["host"];
+        $this->mail->SMTPAuth = true;
+        $this->mail->Username = $config["username"];
+        $this->mail->Password = $config["password"];
+
+        $this->mail->SMTPSecure = $config["encryption"];
+        $this->mail->Port = $config["port"];
+
+        $this->mail->CharSet = "UTF-8";
+        $this->mail->isHTML(true);
+
+        $this->mail->setFrom(
+            $config["from_email"],
+            $config["from_name"]
+        );
+    }
+
+    public function enviarRecuperacao($email, $nome, $link)
+    {
+        try {
+
+            $this->mail->clearAddresses();
+
+            $this->mail->addAddress($email, $nome);
+
+            $this->mail->Subject = "Recuperação de senha - Tamborim Para Todos";
+
+            $this->mail->Body = "
+                <h2>Olá, {$nome}!</h2>
+
+                <p>Recebemos uma solicitação para redefinir sua senha.</p>
+
+                <p>Clique no botão abaixo:</p>
+
+                <p>
+                    <a href='{$link}'
+                       style='background:#F59E0B;
+                              color:#000;
+                              padding:12px 20px;
+                              text-decoration:none;
+                              border-radius:8px;
+                              font-weight:bold;'>
+                        Redefinir Senha
+                    </a>
+                </p>
+
+                <p>Ou copie e cole este link no navegador:</p>
+
+                <p>{$link}</p>
+
+                <hr>
+
+                <small>
+                    Se você não solicitou esta alteração,
+                    basta ignorar este e-mail.
+                </small>
+            ";
+
+            $this->mail->AltBody =
+                "Olá {$nome},\n\n".
+                "Use o link abaixo para redefinir sua senha:\n\n".
+                "{$link}";
+
+            $this->mail->send();
+
+            return true;
+
+        } catch (Exception $e) {
+
+            return false;
+
+        }
+    }
+}
