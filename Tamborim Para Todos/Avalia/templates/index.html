@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avalia - Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="topo">
+
+    <div class="logo-topo">
+        <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="Avalia">
+    </div>
+
+    <nav class="menu">
+        <a href="/">🏠 Hub</a>
+        <a href="/diagnostico">🔧 Diagnóstico</a>
+        <a href="/pecas">⚙️ Peças</a>
+        <a href="/mecanicos">📍 Mecânicos</a>
+        <a href="/tutoriais">📚 Tutoriais</a>
+    </nav>
+
+</header>
+    <!-- Conteúdo principal -->
+    <main class="conteudo">
+        <h1 class="titulo">
+            Avalia 🚗
+        </h1>
+        <!-- Descrição -->
+        <section class="descricao">
+            <p>
+                Use nosso app para dar um pré-diagnóstico do possível problema em seu veículo,
+                descreva os sintomas/problemas que estejam acontecendo.
+                A IA vai analisar a sua descrição e vai passar os possíveis problemas,
+                mais provável para o mecânico.
+            </p>
+        </section>
+        <!-- Cards -->
+        <section class="cards">
+            <!-- Diagnóstico -->
+            <a href="/diagnostico" class="card">
+                <div class="icone azul">
+                    🚗
+                </div>
+                <div class="texto-card">
+                    <h2>Diagnóstico</h2>
+                    <p>
+                        Descreva os sintomas do seu carro e receba possíveis problemas identificados pela IA.
+                    </p>
+                </div>
+                <div class="seta">
+                    ›
+                </div>
+            </a>
+            <!-- Mecânicos -->
+            <a href="/mecanicos" class="card">
+                <div class="icone vermelho">
+                    📍
+                </div>
+                <div class="texto-card">
+                    <h2>Mecânicos</h2>
+                    <p>
+                        Encontre oficinas e mecânicos próximos de você com base na sua localização.
+                    </p>
+                </div>
+                <div class="seta">
+                    ›
+                </div>
+            </a>
+            <!-- Peças -->
+            <a href="/pecas" class="card">
+                <div class="icone azul">
+                    ⚙️
+                </div>
+                <div class="texto-card">
+                    <h2>Peças</h2>
+                    <p>
+                        Pesquise e encontre as melhores peças para o seu veículo.
+                    </p>
+                </div>
+                <div class="seta">
+                    ›
+                </div>
+            </a>
+            <!-- Tutoriais -->
+            <a href="/tutoriais" class="card">
+                <div class="icone laranja">
+                    📚
+                </div>
+                <div class="texto-card">
+                    <h2>Tutoriais</h2>
+                    <p>
+                        Tutoriais e dicas para entender melhor o seu veículo.
+                    </p>
+                </div>
+                <div class="seta">
+                    ›
+                </div>
+            </a>
+        </section>
+    </main>
+    <!-- Rodapé -->
+    <footer class="rodape">
+        <div class="logo-footer">
+            🚗
+            <div>
+                <strong>Avalia</strong>
+                <span>
+                    Seu copiloto inteligente.
+                </span>
+            </div>
+        </div>
+        <p>
+            © 2026 Avalia. Todos os direitos reservados.
+        </p>
+    </footer>
+</body>
+</html>

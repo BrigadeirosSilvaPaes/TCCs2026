@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mecânicos - Avalia</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="mecanicos-page">
+
+
+    <!-- CABEÇALHO -->
+
+    <header class="topo">
+
+
+        <a href="/" class="logo">
+
+            🚗 Avalia
+
+        </a>
+
+
+        <nav class="menu">
+
+
+            <a href="/">
+
+                🏠 Hub
+
+            </a>
+
+
+            <a href="/diagnostico">
+
+                🔧 Diagnóstico
+
+            </a>
+
+
+            <a href="/pecas">
+
+                ⚙ Peças
+
+            </a>
+
+
+            <a href="/mecanicos" class="ativo">
+
+                📍 Mecânicos
+
+            </a>
+
+
+            <a href="/tutoriais">
+
+                📚 Tutoriais
+
+            </a>
+
+
+        </nav>
+
+
+    </header>
+
+
+    <!-- CONTEÚDO -->
+
+    <main class="conteudo-mecanicos">
+
+
+        <div class="titulo-mecanicos">
+
+            <div class="icone-mecanicos">
+
+                📍
+
+            </div>
+
+
+            <div>
+
+                <h1>
+
+                    Mecânicos próximos
+
+                </h1>
+
+
+                <p>
+
+                    Encontre oficinas e mecânicos próximos à sua região
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOCALIZAÇÃO -->
+
+        <section class="localizacao">
+
+            <div class="icone-localizacao">
+
+                📍
+
+            </div>
+
+
+            <div>
+
+                <strong>
+
+                    Sua localização
+
+                </strong>
+
+
+                <p id="localizacao-texto">
+
+                    Clique para encontrar mecânicos próximos
+
+                </p>
+
+            </div>
+
+
+            <button onclick="obterLocalizacao()">
+
+                Usar minha localização
+
+            </button>
+
+        </section>
+
+
+        <!-- MAPA -->
+
+        <section class="mapa">
+
+            <div class="mapa-conteudo">
+
+                <span class="pin-grande">
+
+                    📍
+
+                </span>
+
+
+                <h2>
+
+                    Mapa de mecânicos
+
+                </h2>
+
+
+                <p>
+
+                    Os mecânicos próximos aparecerão aqui
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- LISTA DE MECÂNICOS -->
+
+        <h2 class="titulo-lista">
+
+            Mecânicos próximos
+
+        </h2>
+
+
+        <section class="lista-mecanicos">
+
+
+            <div class="mecanico">
+
+
+                <div class="icone-oficina">
+
+                    🔧
+
+                </div>
+
+
+                <div class="dados-mecanico">
+
+                    <h2>
+
+                        Auto Center Central
+
+                    </h2>
+
+
+                    <p>
+
+                        🔧 Mecânica geral e manutenção
+
+                    </p>
+
+
+                    <p>
+
+                        📍 1,2 km de distância
+
+                    </p>
+
+                </div>
+
+
+                <div class="avaliacao">
+
+                    ⭐ 4,8
+
+                </div>
+
+
+            </div>
+
+
+            <div class="mecanico">
+
+
+                <div class="icone-oficina">
+
+                    🛠️
+
+                </div>
+
+
+                <div class="dados-mecanico">
+
+                    <h2>
+
+                        Oficina do Motor
+
+                    </h2>
+
+
+                    <p>
+
+                        🔧 Diagnóstico e reparos automotivos
+
+                    </p>
+
+
+                    <p>
+
+                        📍 2,4 km de distância
+
+                    </p>
+
+                </div>
+
+
+                <div class="avaliacao">
+
+                    ⭐ 4,7
+
+                </div>
+
+
+            </div>
+
+
+            <div class="mecanico">
+
+
+                <div class="icone-oficina">
+
+                    🚗
+
+                </div>
+
+
+                <div class="dados-mecanico">
+
+                    <h2>
+
+                        Mecânica Express
+
+                    </h2>
+
+
+                    <p>
+
+                        🔧 Revisão e manutenção
+
+                    </p>
+
+
+                    <p>
+
+                        📍 3,1 km de distância
+
+                    </p>
+
+                </div>
+
+
+                <div class="avaliacao">
+
+                    ⭐ 4,6
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <script>
+
+
+        function obterLocalizacao() {
+
+
+            const texto = document.getElementById(
+
+                "localizacao-texto"
+
+            );
+
+
+            if (!navigator.geolocation) {
+
+
+                texto.innerText =
+
+                    "Seu navegador não suporta localização.";
+
+                return;
+
+            }
+
+
+            texto.innerText =
+
+                "Obtendo sua localização...";
+
+
+            navigator.geolocation.getCurrentPosition(
+
+
+                function(posicao) {
+
+
+                    const latitude =
+
+                        posicao.coords.latitude;
+
+
+                    const longitude =
+
+                        posicao.coords.longitude;
+
+
+                    texto.innerText =
+
+                        "Localização encontrada!";
+
+
+                    alert(
+
+                        "Localização encontrada!\n\n" +
+
+                        "Latitude: " + latitude + "\n" +
+
+                        "Longitude: " + longitude
+
+                    );
+
+
+                },
+
+
+                function() {
+
+
+                    texto.innerText =
+
+                        "Não foi possível obter sua localização.";
+
+                }
+
+            );
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
