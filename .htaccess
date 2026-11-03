@@ -1,9 +1,0 @@
-# Bloqueia arquivos de backup, log, SQL e metadados do Composer.
-<FilesMatch "(^\.|\.(bak|log|sql)$|^composer\.(json|lock)$)">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Deny from all
-    </IfModule>
-</FilesMatch>
