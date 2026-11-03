@@ -1,0 +1,683 @@
+/*
+|--------------------------------------------------------------------------
+| MANUAL DE JAVA
+|--------------------------------------------------------------------------
+|
+| Este arquivo complementa aula.css. O cabeçalho, as seções, os destaques,
+| os códigos e a navegação utilizam o mesmo padrão visual das outras aulas.
+|
+*/
+
+.manual-container {
+    padding-bottom: 72px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RESUMO DO CABEÇALHO
+|--------------------------------------------------------------------------
+*/
+
+.manual-resumo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.manual-resumo span,
+.manual-nivel,
+.manual-topico-nivel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+
+    border:
+        1px solid
+        rgba(56, 189, 248, 0.34);
+
+    border-radius: 999px;
+
+    background:
+        rgba(56, 189, 248, 0.1);
+
+    color: #38bdf8;
+
+    font-weight: 700;
+}
+
+.manual-resumo span {
+    padding: 8px 13px;
+
+    font-size: 0.88rem;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PESQUISA E FILTROS
+|--------------------------------------------------------------------------
+*/
+
+.manual-ferramentas {
+    display: grid;
+
+    grid-template-columns:
+        minmax(240px, 1.4fr)
+        minmax(190px, 0.8fr)
+        minmax(170px, 0.7fr);
+
+    gap: 16px;
+
+    margin-top: 24px;
+}
+
+.manual-campo {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.manual-campo label {
+    font-size: 0.92rem;
+
+    font-weight: 700;
+}
+
+.manual-campo input,
+.manual-campo select {
+    width: 100%;
+
+    min-height: 48px;
+
+    padding:
+        0
+        14px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.38);
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: inherit;
+
+    font: inherit;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.manual-campo input::placeholder {
+    color: inherit;
+
+    opacity: 0.58;
+}
+
+.manual-campo input:focus,
+.manual-campo select:focus {
+    border-color: #38bdf8;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(56, 189, 248, 0.14);
+}
+
+.manual-campo option {
+    color: #111827;
+}
+
+.manual-acoes {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.manual-controle {
+    border: 0;
+
+    font: inherit;
+
+    cursor: pointer;
+}
+
+.manual-controle-secundario {
+    border:
+        1px solid
+        rgba(56, 189, 248, 0.5);
+
+    background: transparent;
+
+    color: inherit;
+}
+
+.manual-resultado {
+    margin:
+        20px
+        0
+        0;
+
+    font-weight: 700;
+
+    opacity: 0.76;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CABEÇALHO DAS CATEGORIAS
+|--------------------------------------------------------------------------
+*/
+
+.manual-categoria {
+    scroll-margin-top: 100px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| ESTRUTURA DO CABEÇALHO
+|--------------------------------------------------------------------------
+|
+| Por padrão, o cabeçalho ocupa toda a largura.
+|
+| Se existir um elemento .manual-categoria-icone,
+| automaticamente é criada uma coluna reservada para ele.
+|
+*/
+
+.manual-categoria-cabecalho {
+    display: grid;
+
+    grid-template-columns:
+        1fr;
+
+    width: 100%;
+
+    gap: 16px;
+
+    align-items: start;
+
+    margin-bottom: 24px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CABEÇALHO COM ÍCONE
+|--------------------------------------------------------------------------
+*/
+
+.manual-categoria-cabecalho:has(
+    .manual-categoria-icone
+) {
+    grid-template-columns:
+        56px
+        minmax(0, 1fr);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| ÍCONE DA CATEGORIA
+|--------------------------------------------------------------------------
+*/
+
+.manual-categoria-icone {
+    display: grid;
+
+    place-items: center;
+
+    width: 56px;
+    height: 56px;
+
+    border:
+        1px solid
+        rgba(56, 189, 248, 0.32);
+
+    border-radius: 14px;
+
+    background:
+        rgba(56, 189, 248, 0.1);
+
+    font-size: 1.55rem;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TEXTO DA CATEGORIA
+|--------------------------------------------------------------------------
+*/
+
+.manual-categoria-texto {
+    width: 100%;
+
+    min-width: 0;
+}
+
+.manual-categoria-texto h2 {
+    width: 100%;
+
+    margin-top: 8px;
+
+    margin-bottom: 14px;
+
+    line-height: 1.2;
+}
+
+.manual-categoria-texto p {
+    width: 100%;
+
+    max-width: 850px;
+
+    margin-bottom: 0;
+
+    line-height: 1.7;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| NÍVEL DA CATEGORIA
+|--------------------------------------------------------------------------
+*/
+
+.manual-nivel {
+    padding:
+        5px
+        10px;
+
+    font-size: 0.7rem;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CARDS DOS TÓPICOS
+|--------------------------------------------------------------------------
+*/
+
+.manual-grade {
+    display: grid;
+
+    gap: 14px;
+}
+
+.manual-topico {
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.28);
+
+    border-radius: 12px;
+
+    background:
+        rgba(56, 189, 248, 0.025);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.manual-topico:hover {
+    border-color:
+        rgba(56, 189, 248, 0.52);
+}
+
+.manual-topico.esta-aberto {
+    border-color:
+        rgba(56, 189, 248, 0.72);
+
+    box-shadow:
+        0 10px 28px
+        rgba(15, 23, 42, 0.09);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| BOTÃO DO TÓPICO
+|--------------------------------------------------------------------------
+*/
+
+.manual-topico-botao {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    width: 100%;
+
+    padding: 20px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: inherit;
+
+    text-align: left;
+
+    font: inherit;
+
+    cursor: pointer;
+}
+
+.manual-topico-botao:hover,
+.manual-topico-botao:focus-visible {
+    background:
+        rgba(56, 189, 248, 0.06);
+}
+
+.manual-topico-botao:focus-visible {
+    outline:
+        2px solid
+        #38bdf8;
+
+    outline-offset: -2px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TEXTO DO TÓPICO
+|--------------------------------------------------------------------------
+*/
+
+.manual-topico-texto {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 7px;
+
+    min-width: 0;
+}
+
+.manual-topico-nivel {
+    padding:
+        4px
+        8px;
+
+    font-size: 0.65rem;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+}
+
+.manual-topico-texto strong {
+    font-size: 1.08rem;
+
+    line-height: 1.35;
+}
+
+.manual-topico-texto small {
+    font-size: 0.93rem;
+
+    line-height: 1.6;
+
+    opacity: 0.76;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SETA / BOTÃO DE EXPANSÃO
+|--------------------------------------------------------------------------
+*/
+
+.manual-topico-seta {
+    flex:
+        0
+        0
+        auto;
+
+    display: grid;
+
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(56, 189, 248, 0.14);
+
+    color: #38bdf8;
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CONTEÚDO EXPANDIDO
+|--------------------------------------------------------------------------
+*/
+
+.manual-topico-conteudo {
+    padding:
+        6px
+        20px
+        24px;
+
+    border-top:
+        1px solid
+        rgba(148, 163, 184, 0.24);
+}
+
+.manual-topico-conteudo h3 {
+    margin:
+        24px
+        0
+        8px;
+
+    font-size: 1.06rem;
+}
+
+.manual-topico-conteudo p,
+.manual-topico-conteudo li {
+    line-height: 1.75;
+}
+
+.manual-topico-conteudo ul,
+.manual-topico-conteudo ol {
+    padding-left: 24px;
+}
+
+.manual-topico-conteudo .codigo-java {
+    margin-top: 16px;
+
+    margin-bottom: 16px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SEM RESULTADOS
+|--------------------------------------------------------------------------
+*/
+
+.manual-vazio {
+    text-align: center;
+}
+
+.manual-vazio p {
+    margin-bottom: 0;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| ELEMENTOS OCULTOS
+|--------------------------------------------------------------------------
+*/
+
+[hidden] {
+    display: none !important;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RESPONSIVIDADE
+|--------------------------------------------------------------------------
+*/
+
+@media (
+    max-width: 860px
+) {
+
+    /*
+    |--------------------------------------------------------------------------
+    | FILTROS
+    |--------------------------------------------------------------------------
+    */
+
+    .manual-ferramentas {
+        grid-template-columns:
+            1fr
+            1fr;
+    }
+
+    .manual-campo-pesquisa {
+        grid-column:
+            1
+            /
+            -1;
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TABLETS PEQUENOS / CELULARES
+|--------------------------------------------------------------------------
+*/
+
+@media (
+    max-width: 620px
+) {
+
+    /*
+    |--------------------------------------------------------------------------
+    | FILTROS
+    |--------------------------------------------------------------------------
+    */
+
+    .manual-ferramentas {
+        grid-template-columns:
+            1fr;
+    }
+
+    .manual-campo-pesquisa {
+        grid-column: auto;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | AÇÕES
+    |--------------------------------------------------------------------------
+    */
+
+    .manual-acoes {
+        flex-direction: column;
+    }
+
+    .manual-controle {
+        width: 100%;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CATEGORIA
+    |--------------------------------------------------------------------------
+    */
+
+    .manual-categoria-cabecalho,
+    .manual-categoria-cabecalho:has(
+        .manual-categoria-icone
+    ) {
+        grid-template-columns:
+            1fr;
+    }
+
+    .manual-categoria-icone {
+        width: 50px;
+        height: 50px;
+    }
+
+    .manual-categoria-texto h2 {
+        width: 100%;
+    }
+
+    .manual-categoria-texto p {
+        max-width: 100%;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | TÓPICOS
+    |--------------------------------------------------------------------------
+    */
+
+    .manual-topico-botao {
+        align-items: flex-start;
+
+        padding: 17px;
+    }
+
+    .manual-topico-conteudo {
+        padding:
+            4px
+            17px
+            20px;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | RESUMO
+    |--------------------------------------------------------------------------
+    */
+
+    .manual-resumo {
+        justify-content: flex-start;
+    }
+
+}

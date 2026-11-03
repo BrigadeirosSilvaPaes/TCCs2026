@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+:root {
+    --bg-gradient: linear-gradient(135deg, #1e1e2f, #2d2d44);
+    --card-bg: #1f2933;
+    --input-bg: #374151;
+    --primary: #38bdf8;
+    --primary-dark: #1e3a8a;
+    --text: #ffffff;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --shadow: 0 0 30px rgba(0, 0, 0, .6);
+}
+
+
+/* =========================
+RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+BODY
+========================= */
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text);
+    min-height: 100vh;
+    transition: .3s;
+}
+
+
+/* =========================
+TEXTOS
+========================= */
+
+h1,
+h2,
+h3 {
+    color: var(--primary);
+}
+
+p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+
+/* =========================
+BOTÕES
+========================= */
+
+.botao,
+.sub-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #0f172a;
+    font-weight: bold;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.botao:hover,
+.sub-btn:hover {
+    transform: scale(1.05);
+}
+
+
+/* =========================
+CARDS GERAIS
+========================= */
+
+.card,
+.card-principal,
+.mission-box,
+.mensagem-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+
+/* =========================
+INPUTS GERAIS
+========================= */
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    background: var(--input-bg);
+    color: var(--text);
+    border: none;
+    outline: none;
+    border-radius: 8px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-secondary);
+}
+
+
+/* =========================
+   LOGO PADRÃO
+========================= */
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.logo,
+.logo-container img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    background: transparent;
+    padding: 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .35);
+}
+
+
+/* =========================
+HEADER
+========================= */
+
+.header-site {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 15px;
+}
+
+.header-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-texto h1 {
+    font-size: 24px;
+    margin-bottom: 3px;
+}
+
+.header-texto p {
+    font-size: 14px;
+}
+
+
+/* =========================
+TEMA
+========================= */
+
+.tema-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.switch {
+    position: relative;
+    width: 50px;
+    height: 25px;
+}
+
+.switch input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #444;
+    border-radius: 25px;
+    transition: .3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 3px;
+    top: 2.5px;
+    background: white;
+    border-radius: 50%;
+    transition: .3s;
+}
+
+.switch input:checked+.slider {
+    background: var(--primary);
+}
+
+.switch input:checked+.slider::before {
+    transform: translateX(24px);
+}
+
+
+/* =========================
+FOOTER
+========================= */
+
+footer,
+.rodape {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+
+/* =========================
+TEMA CLARO
+========================= */
+
+body.light-mode {
+    --bg-gradient: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    --card-bg: #ffffff;
+    --input-bg: #e2e8f0;
+    --text: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --shadow: 0 0 25px rgba(0, 0, 0, .15);
+}
+
+.light-mode h1,
+.light-mode h2,
+.light-mode h3 {
+    color: var(--primary-dark);
+}
+
+.light-mode input,
+.light-mode textarea,
+.light-mode select {
+    color: #1e293b;
+}
+
+.light-mode .botao,
+.light-mode .sub-btn {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: white;
+}
+
+
+/* =========================
+PÁGINAS DE CONTEÚDO
+========================= */
+
+.content-page {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 50px;
+    width: 90%;
+}
+
+.content-page section {
+    margin-bottom: 35px;
+}
+
+.content-page h2 {
+    margin-bottom: 15px;
+}
+
+.content-page p {
+    line-height: 1.8;
+}
+
+
+/* =========================
+MENSAGENS
+========================= */
+
+.mensagens {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.mensagem {
+    max-width: 400px;
+    padding: 15px 25px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    animation: aparecer .4s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+}
+
+.sucesso {
+    background: #22c55e;
+    color: white;
+}
+
+.erro {
+    background: #ef4444;
+    color: white;
+}
+
+.sumir {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: .5s;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

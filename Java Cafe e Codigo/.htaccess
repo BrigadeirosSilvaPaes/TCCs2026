@@ -1,0 +1,223 @@
+# ==========================================================================
+# JAVA, CAFÉ E CÓDIGO
+# ROTEAMENTO CENTRAL DA APLICAÇÃO
+# ==========================================================================
+
+
+# --------------------------------------------------------------------------
+# CONFIGURAÇÕES DO APACHE
+# --------------------------------------------------------------------------
+#
+# -Indexes:
+# impede que alguém abra uma pasta e veja sua lista de arquivos.
+#
+# -MultiViews:
+# evita que o Apache tente adivinhar arquivos automaticamente.
+# Isso é importante porque nossas URLs sem .php serão controladas
+# exclusivamente pelo router.
+#
+# --------------------------------------------------------------------------
+
+Options -Indexes -MultiViews
+
+
+# --------------------------------------------------------------------------
+# ATIVA REESCRITA DE URLs
+# --------------------------------------------------------------------------
+
+RewriteEngine On
+
+
+# ==========================================================================
+# PROTEÇÃO DE ARQUIVOS OCULTOS
+# ==========================================================================
+#
+# Bloqueia:
+#
+# .env
+# .git
+# .htaccess
+# etc.
+#
+# Mantemos .well-known permitido para certificados SSL.
+#
+# --------------------------------------------------------------------------
+
+RewriteRule "(^|/)\.(?!well-known(?:/|$))" - [F,L]
+
+
+# ==========================================================================
+# PROTEÇÃO DE ARQUIVOS SENSÍVEIS
+# ==========================================================================
+
+<FilesMatch "(?i)^(composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|README.*|\.gitignore|\.env.*)$">
+    Require all denied
+</FilesMatch>
+
+
+# ==========================================================================
+# BLOQUEIA ACESSO DIRETO A ÁREAS INTERNAS DO BACKEND
+# ==========================================================================
+#
+# IMPORTANTE:
+#
+# Usamos THE_REQUEST para bloquear apenas quando alguém tenta acessar
+# diretamente pelo navegador.
+#
+# Os próprios arquivos PHP continuam podendo utilizar:
+#
+# require_once
+# include
+# router.php
+#
+# normalmente.
+#
+# --------------------------------------------------------------------------
+
+RewriteCond %{THE_REQUEST} \s/+(.*/)?backend/(config|security|middleware|controller|models?)(?:/|\s) [NC]
+RewriteRule ^ - [F,L]
+
+
+# --------------------------------------------------------------------------
+# VENDOR
+# --------------------------------------------------------------------------
+#
+# Bibliotecas PHP do Composer não precisam ser acessíveis publicamente.
+#
+# --------------------------------------------------------------------------
+
+RewriteCond %{THE_REQUEST} \s/+(.*/)?vendor(?:/|\s) [NC]
+RewriteRule ^ - [F,L]
+
+
+# ==========================================================================
+# ROTAS ADMINISTRATIVAS ESPECIAIS
+# ==========================================================================
+#
+# A área administrativa continua separada do router público porque possui:
+#
+# - admin_url_token;
+# - admin_token;
+# - sessão administrativa no banco;
+# - verificar_admin.php.
+#
+# --------------------------------------------------------------------------
+
+
+# --------------------------------------------------------------------------
+# PAINEL ADMINISTRATIVO
+# --------------------------------------------------------------------------
+#
+# Público:
+#
+# /admin/TOKEN
+#
+# Interno:
+#
+# /frontend/pages/admin/inicio.php?acesso=TOKEN
+#
+# --------------------------------------------------------------------------
+
+RewriteRule ^admin/([a-fA-F0-9]{48})/?$ frontend/pages/admin/inicio.php?acesso=$1 [L,QSA]
+
+
+# --------------------------------------------------------------------------
+# USUÁRIOS
+# --------------------------------------------------------------------------
+
+RewriteRule ^admin/([a-fA-F0-9]{48})/usuarios/?$ frontend/pages/admin/usuarios.php?acesso=$1 [L,QSA]
+
+
+# --------------------------------------------------------------------------
+# PROFESSORES
+# --------------------------------------------------------------------------
+
+RewriteRule ^admin/([a-fA-F0-9]{48})/professores/?$ frontend/pages/admin/professores.php?acesso=$1 [L,QSA]
+
+
+# ==========================================================================
+# RAIZ DA PLATAFORMA
+# ==========================================================================
+#
+# A raiz física do projeto é um diretório real.
+#
+# Portanto precisamos tratá-la ANTES da regra que libera diretórios reais.
+#
+# Exemplo:
+#
+# http://localhost/java-cafe-e-codigo/
+#
+# ou futuramente:
+#
+# https://seudominio.com.br/
+#
+# --------------------------------------------------------------------------
+
+RewriteRule ^$ backend/config/router.php [L,QSA]
+
+
+# ==========================================================================
+# ARQUIVOS REAIS
+# ==========================================================================
+#
+# CSS, JavaScript, imagens, fontes, PDFs etc. continuam sendo entregues
+# diretamente pelo servidor.
+#
+# Exemplos:
+#
+# /frontend/assets/css/style.css
+# /frontend/assets/js/app.js
+# /frontend/assets/img/logo.png
+#
+# Não há motivo para mandar esses arquivos para o PHP Router.
+#
+# --------------------------------------------------------------------------
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+
+# ==========================================================================
+# DIRETÓRIOS REAIS
+# ==========================================================================
+#
+# Mantemos diretórios físicos acessíveis quando necessários para assets
+# e recursos estáticos.
+#
+# A listagem continua bloqueada por:
+#
+# Options -Indexes
+#
+# --------------------------------------------------------------------------
+
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+
+# ==========================================================================
+# ROUTER CENTRAL
+# ==========================================================================
+#
+# Se chegamos aqui:
+#
+# 1. não é rota administrativa especial;
+# 2. não é arquivo físico;
+# 3. não é diretório físico.
+#
+# Então a URL pertence ao sistema de rotas.
+#
+# Exemplos:
+#
+# /login
+# /cadastro
+# /recuperar-senha
+# /painel
+# /aulas
+# /aulas/15
+# /java/arrays
+# /laboratorio
+# /manual
+#
+# --------------------------------------------------------------------------
+
+RewriteRule ^ backend/config/router.php [L,QSA]

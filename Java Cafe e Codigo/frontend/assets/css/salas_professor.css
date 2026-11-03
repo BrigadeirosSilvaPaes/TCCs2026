@@ -1,0 +1,1926 @@
+/*
+|--------------------------------------------------------------------------
+| SALAS DO PROFESSOR
+|--------------------------------------------------------------------------
+|
+| Java, Café e Código
+|
+| Usado em:
+|
+| frontend/pages/perfil/professor/salas/index.php
+| frontend/pages/perfil/professor/salas/abrir.php
+|
+|--------------------------------------------------------------------------
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| VARIÁVEIS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor {
+
+    --salas-card:
+        var(--cor-card, #ffffff);
+
+    --salas-fundo-suave:
+        var(--cor-fundo-secundario, #f7f8fc);
+
+    --salas-fundo-terciario:
+        #f3f4f8;
+
+    --salas-borda:
+        var(--cor-borda, #e3e6ef);
+
+    --salas-texto:
+        var(--cor-texto, #1f2937);
+
+    --salas-texto-suave:
+        var(--cor-texto-secundario, #6b7280);
+
+    --salas-destaque:
+        var(--cor-primaria, #6c4cff);
+
+    --salas-destaque-hover:
+        #5938ed;
+
+    --salas-destaque-suave:
+        rgba(108, 76, 255, 0.10);
+
+    --salas-sucesso:
+        #16a34a;
+
+    --salas-sucesso-suave:
+        rgba(22, 163, 74, 0.10);
+
+    --salas-alerta:
+        #d97706;
+
+    --salas-alerta-suave:
+        rgba(217, 119, 6, 0.10);
+
+    --salas-perigo:
+        #dc2626;
+
+    --salas-perigo-suave:
+        rgba(220, 38, 38, 0.10);
+
+    --salas-info:
+        #2563eb;
+
+    --salas-info-suave:
+        rgba(37, 99, 235, 0.10);
+
+    --salas-raio:
+        18px;
+
+    --salas-raio-menor:
+        12px;
+
+    --salas-sombra:
+        0 12px 32px rgba(15, 23, 42, 0.08);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CONTAINER
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.painel-estudante {
+
+    width:
+        min(
+            1180px,
+            calc(100% - 40px)
+        );
+
+    margin:
+        0 auto;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| APRESENTAÇÃO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.painel-apresentacao {
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+}
+
+
+.pagina-salas-professor
+.painel-apresentacao::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        250px;
+
+    height:
+        250px;
+
+    border-radius:
+        50%;
+
+    right:
+        -100px;
+
+    top:
+        -100px;
+
+    background:
+        var(--salas-destaque-suave);
+
+    pointer-events:
+        none;
+
+}
+
+
+.pagina-salas-professor
+.painel-apresentacao-conteudo {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+}
+
+
+.pagina-salas-professor
+.painel-apresentacao-conteudo h1 strong {
+
+    color:
+        var(--salas-destaque);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| ESTATÍSTICAS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.estatistica-texto {
+
+    font-size:
+        clamp(
+            1rem,
+            2vw,
+            1.25rem
+        );
+
+    line-height:
+        1.25;
+
+    word-break:
+        break-word;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FORMULÁRIO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-formulario {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap:
+        24px;
+
+    margin-top:
+        28px;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CAMPOS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        8px;
+
+    min-width:
+        0;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-campo-completo {
+
+    grid-column:
+        1 / -1;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| LABEL
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo label {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    color:
+        var(--salas-texto);
+
+    font-size:
+        0.88rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-campo label span {
+
+    color:
+        var(--salas-perigo);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| INPUT
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo input,
+
+.pagina-salas-professor
+.sala-professor-campo textarea,
+
+.pagina-salas-professor
+.sala-professor-campo select {
+
+    width:
+        100%;
+
+    border:
+        1px solid
+        var(--salas-borda);
+
+    border-radius:
+        13px;
+
+    background:
+        var(--salas-card);
+
+    color:
+        var(--salas-texto);
+
+    font:
+        inherit;
+
+    font-size:
+        0.95rem;
+
+    outline:
+        none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| INPUT TEXTUAL
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo input:not([type="file"]) {
+
+    min-height:
+        50px;
+
+    padding:
+        0 15px;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SELECT
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo select {
+
+    min-height:
+        50px;
+
+    padding:
+        0 42px 0 15px;
+
+    cursor:
+        pointer;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TEXTAREA
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo textarea {
+
+    min-height:
+        150px;
+
+    padding:
+        14px 15px;
+
+    resize:
+        vertical;
+
+    line-height:
+        1.65;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PLACEHOLDER
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo input::placeholder,
+
+.pagina-salas-professor
+.sala-professor-campo textarea::placeholder {
+
+    color:
+        var(--salas-texto-suave);
+
+    opacity:
+        0.72;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FOCO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo input:focus,
+
+.pagina-salas-professor
+.sala-professor-campo textarea:focus,
+
+.pagina-salas-professor
+.sala-professor-campo select:focus {
+
+    border-color:
+        var(--salas-destaque);
+
+    box-shadow:
+        0 0 0 4px
+        var(--salas-destaque-suave);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TEXTO AUXILIAR
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo > small {
+
+    color:
+        var(--salas-texto-suave);
+
+    font-size:
+        0.78rem;
+
+    line-height:
+        1.5;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| INPUT DE ARQUIVO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-campo
+input[type="file"] {
+
+    min-height:
+        58px;
+
+    padding:
+        8px;
+
+    cursor:
+        pointer;
+
+    background:
+        var(--salas-fundo-suave);
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-campo
+input[type="file"]::file-selector-button {
+
+    min-height:
+        40px;
+
+    margin-right:
+        12px;
+
+    padding:
+        0 16px;
+
+    border:
+        0;
+
+    border-radius:
+        9px;
+
+    background:
+        var(--salas-destaque);
+
+    color:
+        #ffffff;
+
+    font:
+        inherit;
+
+    font-size:
+        0.82rem;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-campo
+input[type="file"]::file-selector-button:hover {
+
+    background:
+        var(--salas-destaque-hover);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| AÇÕES DO FORMULÁRIO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-formulario-acoes {
+
+    grid-column:
+        1 / -1;
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    padding-top:
+        6px;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-formulario-acoes form {
+
+    margin:
+        0;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-formulario-acoes button {
+
+    border:
+        0;
+
+    cursor:
+        pointer;
+
+    font:
+        inherit;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CARDS DAS SALAS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-card {
+
+    position:
+        relative;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    min-height:
+        330px;
+
+    overflow:
+        hidden;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-card::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    top:
+        0;
+
+    width:
+        100%;
+
+    height:
+        3px;
+
+    background:
+        var(--salas-destaque);
+
+    opacity:
+        0;
+
+    transition:
+        opacity 0.2s ease;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-card:hover::before {
+
+    opacity:
+        1;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-card h3 {
+
+    margin:
+        8px 0 10px;
+
+    color:
+        var(--salas-texto);
+
+    font-size:
+        1.2rem;
+
+    line-height:
+        1.3;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| INFORMAÇÕES DOS CARDS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-card-informacoes {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 1.5fr)
+        minmax(80px, 0.5fr);
+
+    gap:
+        12px;
+
+    margin-top:
+        auto;
+
+    padding-top:
+        22px;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-card-informacoes > div {
+
+    min-width:
+        0;
+
+    padding:
+        13px 14px;
+
+    border:
+        1px solid
+        var(--salas-borda);
+
+    border-radius:
+        13px;
+
+    background:
+        var(--salas-fundo-suave);
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-card-informacoes small {
+
+    display:
+        block;
+
+    margin-bottom:
+        5px;
+
+    color:
+        var(--salas-texto-suave);
+
+    font-size:
+        0.68rem;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-card-informacoes strong {
+
+    display:
+        block;
+
+    color:
+        var(--salas-texto);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CÓDIGO DA SALA
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-codigo {
+
+    color:
+        var(--salas-destaque)
+        !important;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    letter-spacing:
+        0.04em;
+
+    white-space:
+        nowrap;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| AÇÕES DO CARD
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-card-acoes {
+
+    display:
+        flex;
+
+    margin-top:
+        18px;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-card-acoes
+.botao-principal {
+
+    width:
+        100%;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RODAPÉ DO CARD
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-card-rodape {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    margin-top:
+        18px;
+
+    padding-top:
+        15px;
+
+    border-top:
+        1px solid
+        var(--salas-borda);
+
+    color:
+        var(--salas-texto-suave);
+
+    font-size:
+        0.74rem;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PUBLICAÇÃO / CONTEÚDO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-conteudo-card {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        20px;
+
+    min-width:
+        0;
+
+}
+
+
+.pagina-salas-professor
+.sala-conteudo-card > div > h3 {
+
+    margin:
+        8px 0 12px;
+
+    color:
+        var(--salas-texto);
+
+}
+
+
+.pagina-salas-professor
+.sala-conteudo-card > div > p {
+
+    color:
+        var(--salas-texto-suave);
+
+    line-height:
+        1.65;
+
+    overflow-wrap:
+        anywhere;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RECURSOS DA PUBLICAÇÃO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-conteudo-recursos {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        10px;
+
+    padding:
+        16px;
+
+    border:
+        1px solid
+        var(--salas-borda);
+
+    border-radius:
+        14px;
+
+    background:
+        var(--salas-fundo-suave);
+
+}
+
+
+.pagina-salas-professor
+.sala-conteudo-recursos > strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        2px;
+
+    color:
+        var(--salas-texto);
+
+    font-size:
+        0.82rem;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.03em;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RECURSO INDIVIDUAL
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-conteudo-recurso {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        10px;
+
+    padding:
+        12px;
+
+    border:
+        1px solid
+        var(--salas-borda);
+
+    border-radius:
+        11px;
+
+    background:
+        var(--salas-card);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| INFORMAÇÕES DO DOCUMENTO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-conteudo-recurso > div {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    min-width:
+        0;
+
+    flex:
+        1;
+
+    gap:
+        4px;
+
+}
+
+
+.pagina-salas-professor
+.sala-conteudo-recurso > div > strong {
+
+    color:
+        var(--salas-texto);
+
+    font-size:
+        0.88rem;
+
+    overflow-wrap:
+        anywhere;
+
+}
+
+
+.pagina-salas-professor
+.sala-conteudo-recurso > div > small {
+
+    color:
+        var(--salas-texto-suave);
+
+    font-size:
+        0.72rem;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| LINKS DOS RECURSOS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-conteudo-recurso > a {
+
+    flex-shrink:
+        0;
+
+    white-space:
+        nowrap;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FORMULÁRIO DE REMOÇÃO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-conteudo-recurso form {
+
+    display:
+        inline-flex;
+
+    margin:
+        0;
+
+    flex-shrink:
+        0;
+
+}
+
+
+.pagina-salas-professor
+.sala-conteudo-recurso form button {
+
+    border:
+        0;
+
+    cursor:
+        pointer;
+
+    font:
+        inherit;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| DIFERENCIA DOCUMENTO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-conteudo-recursos:has(
+    .sala-conteudo-recurso
+) {
+
+    position:
+        relative;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| BOTÕES
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.botao-principal,
+
+.pagina-salas-professor
+.botao-secundario {
+
+    text-decoration:
+        none;
+
+}
+
+
+.pagina-salas-professor
+button.botao-principal,
+
+.pagina-salas-professor
+button.botao-secundario {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| BOTÃO SECUNDÁRIO EM RECURSOS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-conteudo-recurso
+.botao-secundario {
+
+    min-height:
+        38px;
+
+    padding:
+        0 13px;
+
+    font-size:
+        0.76rem;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| BOTÃO PRINCIPAL EM VÍDEOS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-conteudo-recurso
+.botao-principal {
+
+    min-height:
+        40px;
+
+    padding:
+        0 15px;
+
+    font-size:
+        0.78rem;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| ESTADO VAZIO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.sala-professor-vazio {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+
+    min-height:
+        330px;
+
+    padding:
+        48px 30px;
+
+    border:
+        1px dashed
+        var(--salas-borda);
+
+    border-radius:
+        var(--salas-raio);
+
+    background:
+        var(--salas-fundo-suave);
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-vazio-icone {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        64px;
+
+    height:
+        64px;
+
+    margin-bottom:
+        20px;
+
+    border-radius:
+        18px;
+
+    background:
+        var(--salas-destaque-suave);
+
+    color:
+        var(--salas-destaque);
+
+    font-size:
+        1.05rem;
+
+    font-weight:
+        900;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-vazio h3 {
+
+    margin:
+        0;
+
+    color:
+        var(--salas-texto);
+
+    font-size:
+        1.35rem;
+
+}
+
+
+.pagina-salas-professor
+.sala-professor-vazio p {
+
+    max-width:
+        530px;
+
+    margin:
+        12px auto 24px;
+
+    color:
+        var(--salas-texto-suave);
+
+    line-height:
+        1.65;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| STATUS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.acesso-status.acesso-disponivel {
+
+    background:
+        var(--salas-sucesso-suave);
+
+    color:
+        var(--salas-sucesso);
+
+}
+
+
+.pagina-salas-professor
+.acesso-status.acesso-breve {
+
+    background:
+        var(--salas-alerta-suave);
+
+    color:
+        var(--salas-alerta);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| HOVER DOS CARDS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.painel-acessos-grid
+.acesso-card {
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+
+.pagina-salas-professor
+.painel-acessos-grid
+.acesso-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        var(--salas-sombra);
+
+    border-color:
+        rgba(
+            108,
+            76,
+            255,
+            0.28
+        );
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CARD PRINCIPAL
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.acesso-principal {
+
+    border-color:
+        rgba(
+            108,
+            76,
+            255,
+            0.20
+        );
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| LINKS DOS CARDS
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+a.acesso-card {
+
+    color:
+        inherit;
+
+    text-decoration:
+        none;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SETA
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.acesso-seta {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        36px;
+
+    height:
+        36px;
+
+    margin-top:
+        auto;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--salas-destaque-suave);
+
+    color:
+        var(--salas-destaque);
+
+    font-weight:
+        800;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| ORIENTAÇÃO
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+.painel-orientacao-etapas article {
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+
+.pagina-salas-professor
+.painel-orientacao-etapas article:hover {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| ACESSIBILIDADE
+|--------------------------------------------------------------------------
+*/
+
+.pagina-salas-professor
+a:focus-visible,
+
+.pagina-salas-professor
+button:focus-visible,
+
+.pagina-salas-professor
+input:focus-visible,
+
+.pagina-salas-professor
+textarea:focus-visible,
+
+.pagina-salas-professor
+select:focus-visible {
+
+    outline:
+        3px solid
+        var(--salas-destaque);
+
+    outline-offset:
+        3px;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TEMA ESCURO
+|--------------------------------------------------------------------------
+*/
+
+html.dark
+.pagina-salas-professor,
+
+html[data-theme="dark"]
+.pagina-salas-professor,
+
+body.dark
+.pagina-salas-professor,
+
+body[data-theme="dark"]
+.pagina-salas-professor {
+
+    --salas-card:
+        #161a22;
+
+    --salas-fundo-suave:
+        #11151c;
+
+    --salas-fundo-terciario:
+        #181d26;
+
+    --salas-borda:
+        #2a303b;
+
+    --salas-texto:
+        #f3f4f6;
+
+    --salas-texto-suave:
+        #a6adba;
+
+    --salas-destaque-suave:
+        rgba(139, 111, 255, 0.13);
+
+    --salas-sucesso-suave:
+        rgba(34, 197, 94, 0.13);
+
+    --salas-alerta-suave:
+        rgba(245, 158, 11, 0.13);
+
+    --salas-perigo-suave:
+        rgba(239, 68, 68, 0.13);
+
+    --salas-info-suave:
+        rgba(59, 130, 246, 0.13);
+
+    --salas-sombra:
+        0 16px 35px rgba(0, 0, 0, 0.25);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SELECT NO TEMA ESCURO
+|--------------------------------------------------------------------------
+*/
+
+html.dark
+.pagina-salas-professor
+.sala-professor-campo select,
+
+html[data-theme="dark"]
+.pagina-salas-professor
+.sala-professor-campo select,
+
+body.dark
+.pagina-salas-professor
+.sala-professor-campo select,
+
+body[data-theme="dark"]
+.pagina-salas-professor
+.sala-professor-campo select {
+
+    color-scheme:
+        dark;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TABLET
+|--------------------------------------------------------------------------
+*/
+
+@media (
+    max-width: 900px
+) {
+
+    .pagina-salas-professor
+    .sala-professor-formulario {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-campo-completo {
+
+        grid-column:
+            auto;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-formulario-acoes {
+
+        grid-column:
+            auto;
+
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| MOBILE
+|--------------------------------------------------------------------------
+*/
+
+@media (
+    max-width: 700px
+) {
+
+    .pagina-salas-professor
+    .painel-estudante {
+
+        width:
+            min(
+                100% - 24px,
+                1180px
+            );
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-formulario {
+
+        gap:
+            18px;
+
+        margin-top:
+            22px;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-formulario-acoes {
+
+        width:
+            100%;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-formulario-acoes form {
+
+        width:
+            100%;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-formulario-acoes
+    .botao-principal,
+
+    .pagina-salas-professor
+    .sala-professor-formulario-acoes
+    .botao-secundario {
+
+        width:
+            100%;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-card-informacoes {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-card-rodape {
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | RECURSOS
+    |--------------------------------------------------------------------------
+    */
+
+    .pagina-salas-professor
+    .sala-conteudo-recurso {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-conteudo-recurso > a {
+
+        width:
+            100%;
+
+        white-space:
+            normal;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-conteudo-recurso form {
+
+        width:
+            100%;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-conteudo-recurso form button {
+
+        width:
+            100%;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-vazio {
+
+        min-height:
+            290px;
+
+        padding:
+            38px 20px;
+
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| MOBILE PEQUENO
+|--------------------------------------------------------------------------
+*/
+
+@media (
+    max-width: 480px
+) {
+
+    .pagina-salas-professor
+    .sala-professor-campo
+    input:not([type="file"]),
+
+    .pagina-salas-professor
+    .sala-professor-campo
+    select {
+
+        min-height:
+            48px;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-campo
+    input[type="file"] {
+
+        padding:
+            6px;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-campo
+    input[type="file"]::file-selector-button {
+
+        display:
+            block;
+
+        width:
+            100%;
+
+        margin:
+            0 0 8px;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-codigo {
+
+        font-size:
+            0.92rem;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-professor-vazio-icone {
+
+        width:
+            56px;
+
+        height:
+            56px;
+
+        border-radius:
+            15px;
+
+    }
+
+
+    .pagina-salas-professor
+    .sala-conteudo-recursos {
+
+        padding:
+            12px;
+
+    }
+
+}

@@ -1,0 +1,2047 @@
+/* =========================================================
+   ASSISTENTE JAVA
+   Java, Café e Código
+========================================================= */
+
+
+/* =========================================================
+   COMPONENTE / VARIÁVEIS
+========================================================= */
+
+.assistente-ia {
+    --assistente-fundo: #101a2b;
+    --assistente-fundo-secundario: #162238;
+    --assistente-fundo-campo: #0d1727;
+
+    --assistente-borda:
+        rgba(255, 255, 255, 0.09);
+
+    --assistente-borda-forte:
+        rgba(71, 183, 255, 0.28);
+
+    --assistente-texto: #f5f8fc;
+    --assistente-texto-secundario: #aebbd0;
+    --assistente-texto-suave: #7f8da4;
+
+    --assistente-azul: #2464c4;
+    --assistente-azul-claro: #36baf1;
+
+    --assistente-erro: #ff7373;
+
+    --assistente-sombra:
+        0 24px 70px
+        rgba(0, 0, 0, 0.36);
+
+    position: fixed;
+
+    right: 24px;
+    bottom: 24px;
+
+    z-index: 9999;
+
+    font-family: inherit;
+
+    line-height: 1.5;
+}
+
+
+.assistente-ia,
+.assistente-ia *,
+.assistente-ia *::before,
+.assistente-ia *::after {
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BOTÃO FLUTUANTE
+========================================================= */
+
+.assistente-ia-botao {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 52px;
+
+    padding:
+        0
+        18px;
+
+    border:
+        1px solid
+        rgba(54, 186, 241, 0.25);
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1e4f9b,
+            #258dc4
+        );
+
+    color: #ffffff;
+
+    font: inherit;
+
+    font-size: 0.82rem;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    box-shadow:
+        0 12px 35px
+        rgba(16, 69, 130, 0.32);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+
+.assistente-ia-botao:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 17px 42px
+        rgba(16, 69, 130, 0.42);
+
+    filter:
+        brightness(1.06);
+}
+
+
+.assistente-ia-botao:active {
+    transform:
+        translateY(-1px);
+}
+
+
+.assistente-ia-botao:focus-visible {
+    outline:
+        3px solid
+        rgba(54, 186, 241, 0.35);
+
+    outline-offset: 3px;
+}
+
+
+.assistente-ia-botao-icone {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.13);
+
+    font-size: 0.95rem;
+}
+
+
+.assistente-ia-botao-texto {
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   JANELA
+========================================================= */
+
+.assistente-ia-janela {
+    position: absolute;
+
+    right: 0;
+    bottom: 68px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    width:
+        min(
+            390px,
+            calc(100vw - 32px)
+        );
+
+    height:
+        min(
+            610px,
+            calc(100vh - 130px)
+        );
+
+    height:
+        min(
+            610px,
+            calc(100dvh - 130px)
+        );
+
+    min-height: 340px;
+
+    overflow: hidden;
+
+    background:
+        var(--assistente-fundo);
+
+    border:
+        1px solid
+        var(--assistente-borda);
+
+    border-radius: 20px;
+
+    box-shadow:
+        var(--assistente-sombra);
+
+    transform-origin:
+        bottom right;
+
+    isolation: isolate;
+}
+
+
+/* =========================================================
+   VISIBILIDADE
+========================================================= */
+
+.assistente-ia-janela[aria-hidden="true"] {
+    display: none;
+}
+
+
+.assistente-ia-janela[aria-hidden="false"] {
+    display: flex;
+
+    animation:
+        assistente-ia-abrir
+        0.22s
+        ease-out;
+}
+
+
+@keyframes assistente-ia-abrir {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(12px)
+            scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.assistente-ia-cabecalho {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    flex-shrink: 0;
+
+    padding:
+        16px
+        17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(36, 100, 196, 0.22),
+            rgba(54, 186, 241, 0.05)
+        );
+
+    border-bottom:
+        1px solid
+        var(--assistente-borda);
+}
+
+
+/* =========================================================
+   IDENTIDADE
+========================================================= */
+
+.assistente-ia-identidade {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+}
+
+
+.assistente-ia-avatar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 39px;
+    height: 39px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--assistente-azul),
+            var(--assistente-azul-claro)
+        );
+
+    color: #ffffff;
+
+    font-size: 1rem;
+
+    box-shadow:
+        0 7px 20px
+        rgba(36, 100, 196, 0.25);
+}
+
+
+.assistente-ia-identidade-texto {
+    min-width: 0;
+}
+
+
+.assistente-ia-identidade-texto strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color:
+        var(--assistente-texto);
+
+    font-size: 0.84rem;
+
+    line-height: 1.25;
+}
+
+
+.assistente-ia-identidade-texto span {
+    display: block;
+
+    overflow: hidden;
+
+    color:
+        var(--assistente-texto-secundario);
+
+    font-size: 0.68rem;
+
+    line-height: 1.35;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   AÇÕES DO CABEÇALHO
+========================================================= */
+
+.assistente-ia-cabecalho-acoes {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   NOVA CONVERSA
+========================================================= */
+
+.assistente-ia-nova-conversa {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 34px;
+
+    padding:
+        0
+        11px;
+
+    border:
+        1px solid
+        rgba(54, 186, 241, 0.16);
+
+    border-radius: 9px;
+
+    background:
+        rgba(54, 186, 241, 0.055);
+
+    color:
+        var(--assistente-texto-secundario);
+
+    font: inherit;
+
+    font-size: 0.66rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.assistente-ia-nova-conversa:hover {
+    transform:
+        translateY(-1px);
+
+    background:
+        rgba(54, 186, 241, 0.11);
+
+    border-color:
+        rgba(54, 186, 241, 0.32);
+
+    color:
+        var(--assistente-azul-claro);
+}
+
+
+.assistente-ia-nova-conversa:active {
+    transform:
+        translateY(0);
+}
+
+
+.assistente-ia-nova-conversa:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+.assistente-ia-nova-conversa:focus-visible {
+    outline:
+        2px solid
+        rgba(54, 186, 241, 0.4);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   FECHAR
+========================================================= */
+
+.assistente-ia-fechar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    border:
+        1px solid
+        var(--assistente-borda);
+
+    border-radius: 9px;
+
+    background:
+        rgba(255, 255, 255, 0.03);
+
+    color:
+        var(--assistente-texto-secundario);
+
+    font-family: inherit;
+
+    font-size: 1.35rem;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.assistente-ia-fechar:hover {
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    border-color:
+        var(--assistente-borda-forte);
+
+    color:
+        var(--assistente-texto);
+}
+
+
+.assistente-ia-fechar:focus-visible {
+    outline:
+        2px solid
+        rgba(54, 186, 241, 0.4);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   INFORMAÇÃO
+========================================================= */
+
+.assistente-ia-informacao {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    flex-shrink: 0;
+
+    margin:
+        12px
+        14px
+        0;
+
+    padding:
+        10px
+        11px;
+
+    background:
+        rgba(54, 186, 241, 0.055);
+
+    border:
+        1px solid
+        rgba(54, 186, 241, 0.11);
+
+    border-radius: 10px;
+}
+
+
+.assistente-ia-informacao-icone {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 20px;
+    height: 20px;
+
+    margin-top: 1px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(54, 186, 241, 0.12);
+
+    color:
+        var(--assistente-azul-claro);
+
+    font-size: 0.67rem;
+    font-weight: 800;
+}
+
+
+.assistente-ia-informacao p {
+    margin: 0;
+
+    color:
+        var(--assistente-texto-secundario);
+
+    font-size: 0.68rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ÁREA DE MENSAGENS
+========================================================= */
+
+.assistente-ia-mensagens {
+    display: flex;
+
+    flex: 1;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    min-height: 0;
+
+    padding:
+        16px
+        14px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(255, 255, 255, 0.14)
+        transparent;
+}
+
+
+.assistente-ia-mensagens::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.assistente-ia-mensagens::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.assistente-ia-mensagens::-webkit-scrollbar-thumb {
+    background:
+        rgba(255, 255, 255, 0.13);
+
+    border-radius: 999px;
+}
+
+
+/* =========================================================
+   MENSAGEM
+========================================================= */
+
+.assistente-ia-mensagem {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    width: 100%;
+
+    min-width: 0;
+}
+
+
+.assistente-ia-mensagem[hidden],
+.assistente-ia-mensagem-inicial[hidden] {
+    display: none;
+}
+
+
+/* =========================================================
+   MENSAGEM DO ASSISTENTE
+========================================================= */
+
+.assistente-ia-mensagem-assistente {
+    justify-content: flex-start;
+}
+
+
+.assistente-ia-mensagem-avatar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 28px;
+    height: 28px;
+
+    margin-top: 2px;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--assistente-azul),
+            var(--assistente-azul-claro)
+        );
+
+    color: #ffffff;
+
+    font-size: 0.68rem;
+}
+
+
+/* =========================================================
+   BALÃO
+========================================================= */
+
+.assistente-ia-balao {
+    max-width: 82%;
+
+    min-width: 0;
+
+    padding:
+        10px
+        12px;
+
+    background:
+        var(--assistente-fundo-secundario);
+
+    border:
+        1px solid
+        var(--assistente-borda);
+
+    border-radius:
+        4px
+        13px
+        13px
+        13px;
+
+    color:
+        var(--assistente-texto);
+
+    overflow-wrap: anywhere;
+}
+
+
+.assistente-ia-balao > strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        var(--assistente-azul-claro);
+
+    font-size: 0.68rem;
+
+    line-height: 1.4;
+}
+
+
+.assistente-ia-balao p {
+    margin: 0;
+
+    color:
+        var(--assistente-texto);
+
+    font-size: 0.76rem;
+
+    line-height: 1.58;
+}
+
+
+/* =========================================================
+   RESPOSTA GERADA
+========================================================= */
+
+.assistente-ia-resposta {
+    color:
+        var(--assistente-texto);
+
+    font-size: 0.76rem;
+
+    line-height: 1.62;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+
+    word-break: normal;
+}
+
+
+.assistente-ia-resposta strong {
+    color:
+        var(--assistente-texto);
+
+    font-size: inherit;
+
+    line-height: inherit;
+}
+
+
+.assistente-ia-resposta br + br {
+    line-height: 1.9;
+}
+
+
+/* =========================================================
+   MENSAGEM DO USUÁRIO
+========================================================= */
+
+.assistente-ia-mensagem-usuario {
+    justify-content: flex-end;
+}
+
+
+.assistente-ia-mensagem-usuario
+.assistente-ia-balao {
+    max-width: 82%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(36, 100, 196, 0.92),
+            rgba(31, 126, 180, 0.92)
+        );
+
+    border-color:
+        rgba(255, 255, 255, 0.08);
+
+    border-radius:
+        13px
+        4px
+        13px
+        13px;
+}
+
+
+.assistente-ia-mensagem-usuario
+.assistente-ia-balao p {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   CÓDIGO INLINE
+========================================================= */
+
+.assistente-ia-balao code {
+    padding:
+        2px
+        5px;
+
+    border-radius: 5px;
+
+    background:
+        rgba(0, 0, 0, 0.24);
+
+    color:
+        #cfefff;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size: 0.72rem;
+
+    overflow-wrap: normal;
+}
+
+
+/* =========================================================
+   BLOCO DE CÓDIGO
+========================================================= */
+
+.assistente-ia-balao pre {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin:
+        9px
+        0
+        2px;
+
+    padding:
+        11px;
+
+    overflow-x: auto;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    border-radius: 8px;
+
+    background:
+        rgba(0, 0, 0, 0.27);
+
+    white-space: pre;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(255, 255, 255, 0.18)
+        transparent;
+}
+
+
+.assistente-ia-balao pre code {
+    display: block;
+
+    min-width: max-content;
+
+    padding: 0;
+
+    background: transparent;
+
+    color:
+        #d9efff;
+
+    font-size: 0.7rem;
+
+    line-height: 1.55;
+
+    white-space: pre;
+}
+
+
+/* =========================================================
+   DIGITANDO
+========================================================= */
+
+.assistente-ia-digitando {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+
+    padding:
+        8px
+        15px;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.035);
+}
+
+
+.assistente-ia-digitando[hidden] {
+    display: none;
+}
+
+
+.assistente-ia-digitando-pontos {
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+}
+
+
+.assistente-ia-digitando-pontos span {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        var(--assistente-azul-claro);
+
+    animation:
+        assistente-ia-ponto
+        1.1s
+        infinite
+        ease-in-out;
+}
+
+
+.assistente-ia-digitando-pontos span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+
+.assistente-ia-digitando-pontos span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+
+@keyframes assistente-ia-ponto {
+
+    0%,
+    60%,
+    100% {
+        opacity: 0.35;
+
+        transform:
+            translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+
+        transform:
+            translateY(-3px);
+    }
+
+}
+
+
+.assistente-ia-digitando small {
+    color:
+        var(--assistente-texto-suave);
+
+    font-size: 0.67rem;
+}
+
+
+/* =========================================================
+   ERRO
+========================================================= */
+
+.assistente-ia-erro {
+    flex-shrink: 0;
+
+    margin:
+        0
+        14px
+        10px;
+
+    padding:
+        9px
+        11px;
+
+    border:
+        1px solid
+        rgba(255, 115, 115, 0.2);
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 115, 115, 0.07);
+
+    color:
+        var(--assistente-erro);
+
+    font-size: 0.68rem;
+
+    line-height: 1.45;
+
+    overflow-wrap: anywhere;
+}
+
+
+.assistente-ia-erro[hidden] {
+    display: none;
+}
+
+
+/* =========================================================
+   FORMULÁRIO
+========================================================= */
+
+.assistente-ia-formulario {
+    flex-shrink: 0;
+
+    padding:
+        12px
+        14px;
+
+    border-top:
+        1px solid
+        var(--assistente-borda);
+
+    background:
+        rgba(7, 14, 25, 0.28);
+}
+
+
+/* =========================================================
+   LABEL ACESSÍVEL
+========================================================= */
+
+.assistente-ia-label {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip:
+        rect(
+            0,
+            0,
+            0,
+            0
+        );
+
+    clip-path:
+        inset(50%);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   ÁREA DO CAMPO
+========================================================= */
+
+.assistente-ia-campo-area {
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 8px;
+
+    padding:
+        7px
+        7px
+        7px
+        12px;
+
+    background:
+        var(--assistente-fundo-campo);
+
+    border:
+        1px solid
+        var(--assistente-borda);
+
+    border-radius: 12px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.assistente-ia-campo-area:focus-within {
+    border-color:
+        var(--assistente-borda-forte);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(54, 186, 241, 0.06);
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+.assistente-ia-campo-area textarea {
+    flex: 1;
+
+    width: 100%;
+    min-width: 0;
+
+    min-height: 37px;
+    max-height: 120px;
+
+    padding:
+        8px
+        0;
+
+    border: 0;
+
+    outline: 0;
+
+    resize: none;
+
+    overflow-y: auto;
+
+    background: transparent;
+
+    color:
+        var(--assistente-texto);
+
+    caret-color:
+        var(--assistente-azul-claro);
+
+    font: inherit;
+
+    font-size: 0.75rem;
+
+    line-height: 1.5;
+}
+
+
+.assistente-ia-campo-area textarea::placeholder {
+    color:
+        var(--assistente-texto-suave);
+
+    opacity: 0.85;
+}
+
+
+.assistente-ia-campo-area textarea:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   ENVIAR
+========================================================= */
+
+.assistente-ia-enviar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--assistente-azul),
+            var(--assistente-azul-claro)
+        );
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 0.95rem;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.assistente-ia-enviar:hover:not(:disabled) {
+    transform:
+        translateY(-1px);
+
+    filter:
+        brightness(1.07);
+}
+
+
+.assistente-ia-enviar:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+.assistente-ia-enviar:focus-visible {
+    outline:
+        2px solid
+        rgba(54, 186, 241, 0.45);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   RODAPÉ DO FORMULÁRIO
+========================================================= */
+
+.assistente-ia-formulario-rodape {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: 7px;
+}
+
+
+.assistente-ia-formulario-rodape small {
+    color:
+        var(--assistente-texto-suave);
+
+    font-size: 0.61rem;
+
+    line-height: 1.4;
+}
+
+
+.assistente-ia-contador {
+    flex-shrink: 0;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+.assistente-ia-contador-limite {
+    color:
+        #ff8c8c !important;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   RODAPÉ DO ASSISTENTE
+========================================================= */
+
+.assistente-ia-rodape {
+    flex-shrink: 0;
+
+    padding:
+        8px
+        14px
+        10px;
+
+    text-align: center;
+
+    background:
+        rgba(7, 14, 25, 0.28);
+}
+
+
+.assistente-ia-rodape p {
+    margin: 0;
+
+    color:
+        var(--assistente-texto-suave);
+
+    font-size: 0.58rem;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   CONFIRMAÇÃO DE NOVA CONVERSA
+========================================================= */
+
+.assistente-ia-confirmacao {
+    flex-shrink: 0;
+
+    margin:
+        0
+        14px
+        12px;
+
+    padding: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(36, 100, 196, 0.11),
+            rgba(54, 186, 241, 0.045)
+        );
+
+    border:
+        1px solid
+        rgba(54, 186, 241, 0.17);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.08);
+
+    animation:
+        assistente-confirmacao-entrada
+        0.2s
+        ease-out;
+}
+
+
+.assistente-ia-confirmacao[hidden] {
+    display: none;
+}
+
+
+@keyframes assistente-confirmacao-entrada {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   CONTEÚDO DA CONFIRMAÇÃO
+========================================================= */
+
+.assistente-ia-confirmacao-conteudo {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+}
+
+
+.assistente-ia-confirmacao-icone {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+
+    border:
+        1px solid
+        rgba(54, 186, 241, 0.15);
+
+    border-radius: 9px;
+
+    background:
+        rgba(54, 186, 241, 0.10);
+
+    color:
+        var(--assistente-azul-claro);
+
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+
+.assistente-ia-confirmacao-texto {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.assistente-ia-confirmacao-texto strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        var(--assistente-texto);
+
+    font-size: 0.76rem;
+
+    line-height: 1.4;
+}
+
+
+.assistente-ia-confirmacao-texto p {
+    margin: 0;
+
+    color:
+        var(--assistente-texto-secundario);
+
+    font-size: 0.67rem;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   AÇÕES DA CONFIRMAÇÃO
+========================================================= */
+
+.assistente-ia-confirmacao-acoes {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 13px;
+}
+
+
+/* =========================================================
+   BOTÕES DA CONFIRMAÇÃO
+========================================================= */
+
+.assistente-ia-confirmacao-cancelar,
+.assistente-ia-confirmacao-confirmar {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 34px;
+
+    padding:
+        0
+        12px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 0.67rem;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.assistente-ia-confirmacao-cancelar {
+    border:
+        1px solid
+        var(--assistente-borda);
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color:
+        var(--assistente-texto-secundario);
+}
+
+
+.assistente-ia-confirmacao-cancelar:hover {
+    transform:
+        translateY(-1px);
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    color:
+        var(--assistente-texto);
+}
+
+
+.assistente-ia-confirmacao-confirmar {
+    border:
+        1px solid
+        rgba(54, 186, 241, 0.2);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--assistente-azul),
+            var(--assistente-azul-claro)
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 6px 18px
+        rgba(36, 100, 196, 0.18);
+}
+
+
+.assistente-ia-confirmacao-confirmar:hover {
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 9px 22px
+        rgba(36, 100, 196, 0.26);
+}
+
+
+.assistente-ia-confirmacao-cancelar:disabled,
+.assistente-ia-confirmacao-confirmar:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+.assistente-ia-confirmacao-cancelar:focus-visible,
+.assistente-ia-confirmacao-confirmar:focus-visible {
+    outline:
+        2px solid
+        rgba(54, 186, 241, 0.4);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   ESTADO DE PROCESSAMENTO
+========================================================= */
+
+.assistente-ia-janela[aria-busy="true"]
+.assistente-ia-campo-area {
+    opacity: 0.82;
+}
+
+
+/* =========================================================
+   TEMA CLARO
+========================================================= */
+
+body.light-mode
+.assistente-ia {
+    --assistente-fundo: #ffffff;
+    --assistente-fundo-secundario: #f4f7fb;
+    --assistente-fundo-campo: #f7f9fc;
+
+    --assistente-borda:
+        rgba(36, 67, 110, 0.11);
+
+    --assistente-borda-forte:
+        rgba(36, 100, 196, 0.28);
+
+    --assistente-texto: #17233a;
+    --assistente-texto-secundario: #56657b;
+    --assistente-texto-suave: #8190a3;
+
+    --assistente-sombra:
+        0 24px 70px
+        rgba(44, 68, 100, 0.18);
+}
+
+
+body.light-mode
+.assistente-ia-formulario,
+
+body.light-mode
+.assistente-ia-rodape {
+    background:
+        rgba(239, 244, 250, 0.72);
+}
+
+
+body.light-mode
+.assistente-ia-balao code {
+    background:
+        rgba(34, 76, 128, 0.08);
+
+    color:
+        #1e5792;
+}
+
+
+body.light-mode
+.assistente-ia-balao pre {
+    background:
+        #111c2d;
+}
+
+
+body.light-mode
+.assistente-ia-balao pre code {
+    color:
+        #d9efff;
+}
+
+
+body.light-mode
+.assistente-ia-nova-conversa {
+    background:
+        rgba(36, 100, 196, 0.05);
+
+    border-color:
+        rgba(36, 100, 196, 0.13);
+}
+
+
+body.light-mode
+.assistente-ia-nova-conversa:hover {
+    background:
+        rgba(36, 100, 196, 0.09);
+
+    border-color:
+        rgba(36, 100, 196, 0.25);
+}
+
+
+body.light-mode
+.assistente-ia-confirmacao {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(36, 100, 196, 0.06),
+            rgba(54, 186, 241, 0.025)
+        );
+
+    border-color:
+        rgba(36, 100, 196, 0.13);
+
+    box-shadow:
+        0 8px 24px
+        rgba(44, 68, 100, 0.06);
+}
+
+
+body.light-mode
+.assistente-ia-confirmacao-cancelar {
+    background:
+        #ffffff;
+}
+
+
+/* =========================================================
+   TABLET / TELAS MENORES
+========================================================= */
+
+@media (
+    max-width: 650px
+) {
+
+    .assistente-ia {
+        right: 14px;
+
+        bottom:
+            max(
+                14px,
+                env(safe-area-inset-bottom)
+            );
+    }
+
+
+    .assistente-ia-janela {
+        position: fixed;
+
+        right: 10px;
+
+        bottom:
+            calc(
+                76px
+                +
+                env(safe-area-inset-bottom)
+            );
+
+        width:
+            calc(100vw - 20px);
+
+        height:
+            min(
+                610px,
+                calc(100vh - 100px)
+            );
+
+        height:
+            min(
+                610px,
+                calc(100dvh - 100px)
+            );
+
+        border-radius: 17px;
+    }
+
+
+    .assistente-ia-botao {
+        min-height: 50px;
+
+        padding:
+            0
+            15px;
+    }
+
+
+    .assistente-ia-cabecalho-acoes {
+        gap: 6px;
+    }
+
+
+    .assistente-ia-nova-conversa {
+        padding:
+            0
+            9px;
+
+        font-size: 0.62rem;
+    }
+
+
+    .assistente-ia-confirmacao {
+        margin:
+            0
+            11px
+            10px;
+
+        padding: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   CELULARES PEQUENOS
+========================================================= */
+
+@media (
+    max-width: 420px
+) {
+
+    .assistente-ia {
+        right: 10px;
+
+        bottom:
+            max(
+                10px,
+                env(safe-area-inset-bottom)
+            );
+    }
+
+
+    .assistente-ia-janela {
+        right: 6px;
+
+        bottom:
+            calc(
+                70px
+                +
+                env(safe-area-inset-bottom)
+            );
+
+        width:
+            calc(100vw - 12px);
+
+        height:
+            calc(100vh - 82px);
+
+        height:
+            calc(100dvh - 82px);
+
+        min-height: 0;
+
+        border-radius: 15px;
+    }
+
+
+    .assistente-ia-cabecalho {
+        padding: 14px;
+    }
+
+
+    .assistente-ia-avatar {
+        width: 36px;
+        height: 36px;
+    }
+
+
+    .assistente-ia-identidade {
+        gap: 9px;
+    }
+
+
+    .assistente-ia-identidade-texto span {
+        max-width: 130px;
+    }
+
+
+    .assistente-ia-informacao {
+        margin:
+            10px
+            11px
+            0;
+    }
+
+
+    .assistente-ia-mensagens {
+        padding:
+            14px
+            11px;
+    }
+
+
+    .assistente-ia-balao {
+        max-width: 87%;
+    }
+
+
+    .assistente-ia-mensagem-usuario
+    .assistente-ia-balao {
+        max-width: 87%;
+    }
+
+
+    .assistente-ia-formulario {
+        padding:
+            10px
+            11px;
+    }
+
+
+    .assistente-ia-formulario-rodape {
+        align-items: flex-end;
+    }
+
+
+    .assistente-ia-formulario-rodape small:first-child {
+        max-width: 70%;
+    }
+
+
+    .assistente-ia-botao-texto {
+        display: none;
+    }
+
+
+    .assistente-ia-botao {
+        width: 52px;
+        height: 52px;
+
+        padding: 0;
+    }
+
+
+    .assistente-ia-botao-icone {
+        background: transparent;
+
+        font-size: 1.1rem;
+    }
+
+
+    .assistente-ia-nova-conversa {
+        width: 34px;
+
+        padding: 0;
+
+        overflow: hidden;
+
+        font-size: 0;
+    }
+
+
+    .assistente-ia-nova-conversa::before {
+        content: "+";
+
+        font-size: 1rem;
+        font-weight: 700;
+
+        color:
+            var(--assistente-azul-claro);
+    }
+
+
+    .assistente-ia-confirmacao-acoes {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+
+    .assistente-ia-confirmacao-cancelar,
+    .assistente-ia-confirmacao-confirmar {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   TELAS MUITO BAIXAS
+========================================================= */
+
+@media (
+    max-height: 560px
+) {
+
+    .assistente-ia-janela {
+        height:
+            calc(100vh - 90px);
+
+        height:
+            calc(100dvh - 90px);
+    }
+
+
+    .assistente-ia-informacao {
+        display: none;
+    }
+
+
+    .assistente-ia-rodape {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   MOVIMENTO REDUZIDO
+========================================================= */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    .assistente-ia *,
+    .assistente-ia *::before,
+    .assistente-ia *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+
+}

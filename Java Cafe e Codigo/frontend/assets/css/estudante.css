@@ -1,0 +1,1380 @@
+/* =========================================================
+   PAINEL DO ESTUDANTE
+========================================================= */
+
+.pagina-estudante {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.painel-estudante {
+    width: 100%;
+    min-height: 100vh;
+
+    padding:
+        42px
+        clamp(20px, 4vw, 72px)
+        80px;
+
+    background:
+        radial-gradient(
+            circle at 8% 5%,
+            rgba(56, 189, 248, 0.07),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 95% 40%,
+            rgba(99, 102, 241, 0.05),
+            transparent 24%
+        );
+}
+
+.painel-etiqueta {
+    color: #38bdf8;
+
+    font-size: 0.63rem;
+    font-weight: 900;
+
+    letter-spacing: 0.14em;
+}
+
+
+/* =========================================================
+   APRESENTAÇÃO
+========================================================= */
+
+.painel-apresentacao {
+    width: 100%;
+
+    padding: 38px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(380px, 0.75fr);
+
+    gap: 45px;
+
+    align-items: center;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.14);
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(56, 189, 248, 0.08),
+            rgba(27, 28, 45, 0.96) 48%,
+            rgba(99, 102, 241, 0.06)
+        );
+
+    box-shadow:
+        0 25px 60px
+        rgba(0, 0, 0, 0.2);
+}
+
+.painel-apresentacao-conteudo {
+    min-width: 0;
+}
+
+.painel-apresentacao h1 {
+    margin:
+        12px
+        0
+        0;
+
+    color: #f8fafc;
+
+    font-size:
+        clamp(
+            2.5rem,
+            4vw,
+            4rem
+        );
+
+    line-height: 1;
+
+    letter-spacing: -0.055em;
+}
+
+.painel-apresentacao h1 strong {
+    color: #38bdf8;
+}
+
+.painel-apresentacao-conteudo > p {
+    max-width: 730px;
+
+    margin:
+        20px
+        0
+        0;
+
+    color: #94a3b8;
+
+    font-size: 0.88rem;
+
+    line-height: 1.75;
+}
+
+.painel-apresentacao-acoes {
+    margin-top: 28px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.botao-principal,
+.botao-secundario,
+.botao-aula {
+    min-height: 49px;
+
+    padding:
+        0
+        19px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    border-radius: 12px;
+
+    font-size: 0.72rem;
+
+    font-weight: 900;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.botao-principal,
+.botao-aula {
+    color: #082f49;
+
+    background: #38bdf8;
+
+    box-shadow:
+        0 13px 27px
+        rgba(56, 189, 248, 0.2);
+}
+
+.botao-principal:hover,
+.botao-aula:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 18px 34px
+        rgba(56, 189, 248, 0.28);
+}
+
+.botao-secundario {
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.15);
+
+    color: #e2e8f0;
+
+    background:
+        rgba(15, 17, 30, 0.42);
+}
+
+.botao-secundario:hover {
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(56, 189, 248, 0.35);
+
+    background:
+        rgba(56, 189, 248, 0.06);
+}
+
+.botao-principal:focus-visible,
+.botao-secundario:focus-visible,
+.botao-aula:focus-visible {
+    outline:
+        3px solid
+        rgba(56, 189, 248, 0.35);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   EDITOR VISUAL
+========================================================= */
+
+.painel-apresentacao-codigo {
+    min-width: 0;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.13);
+
+    border-radius: 18px;
+
+    background: #0b1020;
+
+    box-shadow:
+        0 24px 48px
+        rgba(0, 0, 0, 0.28);
+}
+
+.codigo-topo {
+    min-height: 43px;
+
+    padding:
+        0
+        14px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        auto
+        1fr;
+
+    align-items: center;
+
+    border-bottom:
+        1px solid
+        rgba(148, 163, 184, 0.1);
+
+    background: #111827;
+}
+
+.codigo-controles {
+    display: flex;
+
+    gap: 6px;
+}
+
+.codigo-controles span {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+}
+
+.codigo-controles span:nth-child(1) {
+    background: #f87171;
+}
+
+.codigo-controles span:nth-child(2) {
+    background: #facc15;
+}
+
+.codigo-controles span:nth-child(3) {
+    background: #4ade80;
+}
+
+.codigo-topo strong {
+    color: #94a3b8;
+
+    font-size: 0.62rem;
+}
+
+.codigo-topo small {
+    justify-self: end;
+
+    color: #475569;
+
+    font-size: 0.52rem;
+}
+
+.painel-apresentacao-codigo pre {
+    min-width: 390px;
+    min-height: 280px;
+
+    margin: 0;
+
+    padding:
+        25px
+        23px;
+
+    overflow-x: auto;
+
+    color: #cbd5e1;
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    font-size: 0.66rem;
+
+    line-height: 1.85;
+}
+
+.codigo-roxo {
+    color: #c084fc;
+}
+
+.codigo-azul {
+    color: #67e8f9;
+}
+
+.codigo-amarelo {
+    color: #fde68a;
+}
+
+.codigo-status {
+    min-height: 32px;
+
+    padding:
+        0
+        13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    color: #e0f2fe;
+
+    background: #0ea5e9;
+
+    font-size: 0.52rem;
+}
+
+
+/* =========================================================
+   ESTATÍSTICAS
+========================================================= */
+
+.painel-estatisticas {
+    width: 100%;
+
+    margin-top: 18px;
+
+    display: grid;
+
+    /*
+    |--------------------------------------------------------------------------
+    | AGORA EXISTEM 4 RECURSOS
+    |--------------------------------------------------------------------------
+    |
+    | Aulas Conversadas
+    | Conteúdos Java
+    | Laboratório Java
+    | Sala Global
+    |
+    */
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 14px;
+}
+
+.painel-estatisticas article {
+    min-width: 0;
+
+    min-height: 120px;
+
+    padding: 21px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 17px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.11);
+
+    border-radius: 17px;
+
+    background:
+        rgba(27, 28, 45, 0.89);
+
+    box-shadow:
+        0 14px 32px
+        rgba(0, 0, 0, 0.11);
+}
+
+.estatistica-icone {
+    width: 47px;
+    height: 47px;
+
+    flex:
+        0
+        0
+        47px;
+
+    display: grid;
+
+    place-items: center;
+
+    border:
+        1px solid
+        rgba(56, 189, 248, 0.16);
+
+    border-radius: 14px;
+
+    color: #38bdf8;
+
+    background:
+        rgba(56, 189, 248, 0.06);
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    font-size: 0.7rem;
+
+    font-weight: 900;
+}
+
+.painel-estatisticas article > div {
+    min-width: 0;
+}
+
+.painel-estatisticas small {
+    color: #64748b;
+
+    font-size: 0.53rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.09em;
+}
+
+.painel-estatisticas strong {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #38bdf8;
+
+    font-size: 1.45rem;
+
+    overflow-wrap: anywhere;
+}
+
+.painel-estatisticas strong span {
+    color: #64748b;
+
+    font-size: 0.7rem;
+}
+
+.painel-estatisticas p {
+    margin:
+        3px
+        0
+        0;
+
+    color: #64748b;
+
+    font-size: 0.57rem;
+}
+
+
+/* =========================================================
+   PROGRESSO E PRÓXIMO PASSO
+========================================================= */
+
+.painel-estudo {
+    width: 100%;
+
+    margin-top: 18px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.2fr
+        0.8fr;
+
+    gap: 16px;
+}
+
+.painel-ultima-aula,
+.painel-proximo-passo {
+    min-width: 0;
+
+    padding: 28px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+
+    border-radius: 20px;
+
+    background:
+        rgba(27, 28, 45, 0.92);
+
+    box-shadow:
+        0 16px 36px
+        rgba(0, 0, 0, 0.12);
+}
+
+.painel-card-cabecalho {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.painel-card-cabecalho h2 {
+    margin:
+        7px
+        0
+        0;
+
+    color: #f8fafc;
+
+    font-size: 1.35rem;
+
+    letter-spacing: -0.03em;
+}
+
+.painel-card-numero,
+.painel-proximo-icone {
+    width: 45px;
+    height: 45px;
+
+    flex:
+        0
+        0
+        45px;
+
+    display: grid;
+
+    place-items: center;
+
+    border:
+        1px solid
+        rgba(56, 189, 248, 0.18);
+
+    border-radius: 13px;
+
+    color: #38bdf8;
+
+    background:
+        rgba(56, 189, 248, 0.07);
+
+    font-size: 0.65rem;
+
+    font-weight: 900;
+}
+
+.painel-aula-conteudo,
+.painel-proximo-conteudo {
+    margin-top: 29px;
+}
+
+.painel-aula-conteudo small,
+.painel-proximo-conteudo small {
+    color: #64748b;
+
+    font-size: 0.54rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.09em;
+}
+
+.painel-aula-conteudo h3,
+.painel-proximo-conteudo h3 {
+    margin:
+        7px
+        0
+        0;
+
+    color: #e2e8f0;
+
+    font-size: 1.15rem;
+}
+
+.painel-aula-conteudo p,
+.painel-proximo-conteudo p {
+    max-width: 700px;
+
+    margin:
+        10px
+        0
+        0;
+
+    color: #94a3b8;
+
+    font-size: 0.74rem;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+.painel-aula-progresso {
+    margin-top: 24px;
+}
+
+.painel-aula-progresso > div:first-child {
+    margin-bottom: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.painel-aula-progresso span {
+    color: #64748b;
+
+    font-size: 0.58rem;
+}
+
+.painel-aula-progresso strong {
+    color: #38bdf8;
+
+    font-size: 0.7rem;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PROGRESS NATIVO
+|--------------------------------------------------------------------------
+|
+| Substitui:
+|
+| <div class="painel-barra">
+|     <span style="width: ..."></span>
+| </div>
+|
+| Agora o próprio atributo value do HTML controla o progresso.
+|
+*/
+
+.painel-barra-progresso {
+    width: 100%;
+    height: 7px;
+
+    display: block;
+
+    overflow: hidden;
+
+    border: 0;
+
+    border-radius: 999px;
+
+    background:
+        rgba(148, 163, 184, 0.09);
+
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+
+/* CHROME / EDGE / SAFARI */
+
+.painel-barra-progresso::-webkit-progress-bar {
+    border-radius: 999px;
+
+    background:
+        rgba(148, 163, 184, 0.09);
+}
+
+.painel-barra-progresso::-webkit-progress-value {
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0ea5e9,
+            #38bdf8
+        );
+
+    box-shadow:
+        0 0 12px
+        rgba(56, 189, 248, 0.45);
+}
+
+
+/* FIREFOX */
+
+.painel-barra-progresso::-moz-progress-bar {
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0ea5e9,
+            #38bdf8
+        );
+
+    box-shadow:
+        0 0 12px
+        rgba(56, 189, 248, 0.45);
+}
+
+.botao-aula {
+    margin-top: 21px;
+}
+
+.painel-proximo-passo .botao-secundario {
+    margin-top: 25px;
+}
+
+
+/* =========================================================
+   ORIENTAÇÃO
+========================================================= */
+
+.painel-orientacao {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 29px;
+
+    display: grid;
+
+    grid-template-columns:
+        0.75fr
+        1.25fr;
+
+    gap: 38px;
+
+    align-items: center;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.11);
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(56, 189, 248, 0.06),
+            rgba(27, 28, 45, 0.91)
+        );
+}
+
+.painel-orientacao-texto {
+    min-width: 0;
+}
+
+.painel-orientacao h2 {
+    margin:
+        8px
+        0
+        0;
+
+    color: #f8fafc;
+
+    font-size: 1.5rem;
+
+    letter-spacing: -0.035em;
+}
+
+.painel-orientacao-texto p {
+    margin:
+        12px
+        0
+        0;
+
+    color: #94a3b8;
+
+    font-size: 0.75rem;
+
+    line-height: 1.7;
+}
+
+.painel-orientacao-etapas {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: 11px;
+}
+
+.painel-orientacao-etapas article {
+    min-width: 0;
+
+    min-height: 145px;
+
+    padding: 17px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.1);
+
+    border-radius: 15px;
+
+    background:
+        rgba(15, 17, 30, 0.38);
+}
+
+.painel-orientacao-etapas article > span {
+    color: #38bdf8;
+
+    font-size: 0.62rem;
+
+    font-weight: 900;
+}
+
+.painel-orientacao-etapas strong {
+    display: block;
+
+    margin-top: 20px;
+
+    color: #e2e8f0;
+
+    font-size: 0.72rem;
+}
+
+.painel-orientacao-etapas p {
+    margin:
+        7px
+        0
+        0;
+
+    color: #64748b;
+
+    font-size: 0.61rem;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   ACESSOS
+========================================================= */
+
+.painel-acessos {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 30px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.11);
+
+    border-radius: 20px;
+
+    background:
+        rgba(27, 28, 45, 0.9);
+}
+
+.painel-secao-cabecalho h2 {
+    margin:
+        8px
+        0
+        0;
+
+    color: #f8fafc;
+
+    font-size: 1.55rem;
+
+    letter-spacing: -0.035em;
+}
+
+.painel-secao-cabecalho p {
+    margin:
+        8px
+        0
+        0;
+
+    color: #94a3b8;
+
+    font-size: 0.74rem;
+}
+
+.painel-acessos-grid {
+    margin-top: 24px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(0, 1fr)
+        );
+
+    gap: 12px;
+}
+
+.acesso-card {
+    position: relative;
+
+    min-width: 0;
+
+    min-height: 215px;
+
+    padding: 19px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.1);
+
+    border-radius: 16px;
+
+    color: inherit;
+
+    background:
+        rgba(15, 17, 30, 0.4);
+
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+a.acesso-card:hover {
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(56, 189, 248, 0.33);
+
+    box-shadow:
+        0 16px 30px
+        rgba(0, 0, 0, 0.17);
+}
+
+a.acesso-card:focus-visible {
+    outline:
+        3px solid
+        rgba(56, 189, 248, 0.3);
+
+    outline-offset: 3px;
+
+    border-color:
+        rgba(56, 189, 248, 0.4);
+}
+
+.acesso-principal {
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(56, 189, 248, 0.14),
+            transparent 35%
+        ),
+        rgba(15, 17, 30, 0.46);
+}
+
+.acesso-card-topo {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+.acesso-icone {
+    width: 41px;
+    height: 41px;
+
+    flex:
+        0
+        0
+        41px;
+
+    display: grid;
+
+    place-items: center;
+
+    border:
+        1px solid
+        rgba(56, 189, 248, 0.15);
+
+    border-radius: 12px;
+
+    color: #38bdf8;
+
+    background:
+        rgba(56, 189, 248, 0.06);
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    font-size: 0.59rem;
+
+    font-weight: 900;
+}
+
+.acesso-status {
+    padding:
+        5px
+        7px;
+
+    border-radius: 6px;
+
+    font-size: 0.44rem;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+.acesso-disponivel {
+    color: #4ade80;
+
+    background:
+        rgba(34, 197, 94, 0.08);
+}
+
+.acesso-breve {
+    color: #94a3b8;
+
+    background:
+        rgba(148, 163, 184, 0.07);
+}
+
+.acesso-card > div:nth-child(2) {
+    margin-top: auto;
+}
+
+.acesso-card small {
+    color: #64748b;
+
+    font-size: 0.51rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.1em;
+}
+
+.acesso-card h3 {
+    margin:
+        6px
+        0
+        0;
+
+    color: #f8fafc;
+
+    font-size: 0.95rem;
+}
+
+.acesso-card p {
+    margin:
+        8px
+        0
+        0;
+
+    padding-right: 15px;
+
+    color: #64748b;
+
+    font-size: 0.62rem;
+
+    line-height: 1.55;
+}
+
+.acesso-seta {
+    position: absolute;
+
+    right: 18px;
+
+    bottom: 14px;
+
+    color: #38bdf8;
+
+    font-size: 1rem;
+}
+
+.acesso-indisponivel {
+    opacity: 0.55;
+}
+
+
+/* =========================================================
+   MODO CLARO
+========================================================= */
+
+.light-mode .painel-estudante {
+    background:
+        radial-gradient(
+            circle at 8% 5%,
+            rgba(14, 165, 233, 0.08),
+            transparent 25%
+        ),
+        #f1f5f9;
+}
+
+.light-mode .painel-apresentacao,
+.light-mode .painel-estatisticas article,
+.light-mode .painel-ultima-aula,
+.light-mode .painel-proximo-passo,
+.light-mode .painel-orientacao,
+.light-mode .painel-acessos {
+    border-color:
+        rgba(15, 23, 42, 0.09);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 17px 40px
+        rgba(15, 23, 42, 0.07);
+}
+
+.light-mode .painel-apresentacao h1,
+.light-mode .painel-card-cabecalho h2,
+.light-mode .painel-aula-conteudo h3,
+.light-mode .painel-proximo-conteudo h3,
+.light-mode .painel-orientacao h2,
+.light-mode .painel-secao-cabecalho h2,
+.light-mode .acesso-card h3 {
+    color: #0f172a;
+}
+
+.light-mode .painel-apresentacao-conteudo > p,
+.light-mode .painel-aula-conteudo p,
+.light-mode .painel-proximo-conteudo p,
+.light-mode .painel-orientacao-texto p,
+.light-mode .painel-secao-cabecalho p {
+    color: #64748b;
+}
+
+.light-mode .botao-secundario,
+.light-mode .painel-orientacao-etapas article,
+.light-mode .acesso-card {
+    border-color:
+        rgba(15, 23, 42, 0.08);
+
+    color: #0f172a;
+
+    background: #f8fafc;
+}
+
+.light-mode .botao-secundario:hover {
+    border-color:
+        rgba(14, 165, 233, 0.25);
+
+    background:
+        rgba(14, 165, 233, 0.07);
+}
+
+.light-mode .painel-orientacao-etapas strong {
+    color: #0f172a;
+}
+
+.light-mode .painel-barra-progresso,
+.light-mode
+.painel-barra-progresso::-webkit-progress-bar {
+    background:
+        rgba(15, 23, 42, 0.08);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (
+    max-width: 1200px
+) {
+
+    .painel-apresentacao {
+        grid-template-columns:
+            1fr;
+    }
+
+    .painel-apresentacao-codigo {
+        max-width: 720px;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 4 ESTATÍSTICAS → 2 x 2
+    |--------------------------------------------------------------------------
+    */
+
+    .painel-estatisticas {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .painel-acessos-grid {
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+    }
+
+}
+
+
+@media (
+    max-width: 950px
+) {
+
+    .painel-estudo {
+        grid-template-columns:
+            1fr;
+    }
+
+    .painel-orientacao {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+@media (
+    max-width: 750px
+) {
+
+    .painel-estudante {
+        padding:
+            30px
+            15px
+            60px;
+    }
+
+    .painel-apresentacao {
+        padding:
+            28px
+            23px;
+    }
+
+    .painel-estatisticas {
+        grid-template-columns:
+            1fr;
+    }
+
+    .painel-orientacao-etapas {
+        grid-template-columns:
+            1fr;
+    }
+
+    .painel-acessos-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+}
+
+
+@media (
+    max-width: 500px
+) {
+
+    .painel-apresentacao h1 {
+        font-size: 2.5rem;
+    }
+
+    .painel-apresentacao-acoes {
+        flex-direction: column;
+    }
+
+    .painel-apresentacao-acoes a {
+        width: 100%;
+    }
+
+    .painel-apresentacao-codigo pre {
+        min-width: 370px;
+
+        font-size: 0.61rem;
+    }
+
+    .painel-ultima-aula,
+    .painel-proximo-passo,
+    .painel-orientacao,
+    .painel-acessos {
+        padding:
+            23px
+            19px;
+    }
+
+    .painel-card-cabecalho {
+        gap: 12px;
+    }
+
+    .painel-acessos-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+/* =========================================================
+   MOVIMENTO REDUZIDO
+========================================================= */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    .botao-principal,
+    .botao-secundario,
+    .botao-aula,
+    .acesso-card {
+        transition: none;
+    }
+
+    .botao-principal:hover,
+    .botao-secundario:hover,
+    .botao-aula:hover,
+    a.acesso-card:hover {
+        transform: none;
+    }
+
+}

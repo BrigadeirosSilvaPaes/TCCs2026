@@ -1,0 +1,1021 @@
+/* =========================================================
+   EDITAR PERFIL
+   Java, Café e Código
+========================================================= */
+
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+========================================================= */
+
+.editar-perfil-container {
+    width: min(
+        calc(100% - 40px),
+        980px
+    );
+
+    margin: 0 auto;
+
+    padding: 48px 0 80px;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.editar-perfil-cabecalho {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding: 34px 36px;
+
+    margin-bottom: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(36, 85, 166, 0.18),
+            rgba(54, 186, 241, 0.04)
+        ),
+        var(--perfil-card);
+
+    border:
+        1px solid
+        var(--perfil-borda);
+
+    border-radius: 22px;
+
+    box-shadow:
+        var(--perfil-sombra);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+.editar-perfil-cabecalho::after {
+    content: "";
+
+    position: absolute;
+
+    width: 230px;
+    height: 230px;
+
+    top: -120px;
+    right: -90px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(54, 186, 241, 0.07);
+
+    pointer-events: none;
+}
+
+
+.editar-perfil-cabecalho > div {
+    position: relative;
+
+    z-index: 1;
+
+    max-width: 650px;
+}
+
+
+.editar-perfil-etiqueta {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    color:
+        var(--perfil-azul-claro);
+
+    font-size: 0.72rem;
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+}
+
+
+.editar-perfil-cabecalho h1 {
+    margin:
+        0
+        0
+        10px;
+
+    color:
+        var(--perfil-texto);
+
+    font-size:
+        clamp(
+            1.8rem,
+            4vw,
+            2.6rem
+        );
+
+    line-height: 1.1;
+
+    letter-spacing: -0.03em;
+}
+
+
+.editar-perfil-cabecalho p {
+    margin: 0;
+
+    color:
+        var(--perfil-texto-secundario);
+
+    font-size: 0.9rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   VOLTAR
+========================================================= */
+
+.editar-perfil-voltar {
+    flex-shrink: 0;
+
+    position: relative;
+
+    z-index: 1;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 43px;
+
+    padding: 0 16px;
+
+    border:
+        1px solid
+        var(--perfil-borda-forte);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color:
+        var(--perfil-texto);
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.editar-perfil-voltar:hover {
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(54, 186, 241, 0.06);
+
+    border-color:
+        rgba(54, 186, 241, 0.32);
+}
+
+
+/* =========================================================
+   CARD DO FORMULÁRIO
+========================================================= */
+
+.editar-perfil-card {
+    padding: 30px;
+
+    background:
+        var(--perfil-card);
+
+    border:
+        1px solid
+        var(--perfil-borda);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   CABEÇALHO DO CARD
+========================================================= */
+
+.editar-perfil-card-cabecalho {
+    display: block;
+
+    width: 100%;
+
+    margin-bottom: 26px;
+}
+
+
+.editar-perfil-card-cabecalho .editar-perfil-etiqueta {
+    display: block;
+
+    width: fit-content;
+}
+
+
+.editar-perfil-card-cabecalho h2 {
+    display: block;
+
+    width: 100%;
+
+    margin:
+        0
+        0
+        7px;
+
+    color:
+        var(--perfil-texto);
+
+    font-size:
+        clamp(
+            1.3rem,
+            3vw,
+            1.7rem
+        );
+
+    letter-spacing: -0.025em;
+}
+
+
+.editar-perfil-card-cabecalho p {
+    display: block;
+
+    width: 100%;
+    max-width: 680px;
+
+    margin: 0;
+
+    color:
+        var(--perfil-texto-secundario);
+
+    font-size: 0.84rem;
+
+    line-height: 1.65;
+
+    word-break: normal;
+    overflow-wrap: normal;
+}
+
+
+/* =========================================================
+   FORMULÁRIO
+========================================================= */
+
+.editar-perfil-formulario {
+    display: block;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   E-MAIL DA CONTA
+========================================================= */
+
+.editar-perfil-conta {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    width: 100%;
+
+    padding: 16px 18px;
+
+    margin-bottom: 24px;
+
+    background:
+        var(--perfil-fundo-secundario);
+
+    border:
+        1px solid
+        var(--perfil-borda);
+
+    border-radius: 11px;
+}
+
+
+.editar-perfil-conta > div {
+    min-width: 0;
+}
+
+
+.editar-perfil-conta small {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        var(--perfil-texto-suave);
+
+    font-size: 0.67rem;
+    font-weight: 800;
+
+    letter-spacing: 0.07em;
+}
+
+
+.editar-perfil-conta strong {
+    display: block;
+
+    color:
+        var(--perfil-texto);
+
+    font-size: 0.88rem;
+
+    line-height: 1.45;
+
+    overflow-wrap: anywhere;
+}
+
+
+.editar-perfil-conta > span {
+    flex-shrink: 0;
+
+    padding:
+        6px
+        10px;
+
+    background:
+        rgba(54, 186, 241, 0.07);
+
+    border:
+        1px solid
+        rgba(54, 186, 241, 0.13);
+
+    border-radius: 999px;
+
+    color:
+        var(--perfil-texto-secundario);
+
+    font-size: 0.68rem;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.editar-perfil-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 18px;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.editar-perfil-campo {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 8px;
+
+    min-width: 0;
+}
+
+
+.editar-perfil-campo-largo {
+    grid-column:
+        1 / -1;
+}
+
+
+.editar-perfil-campo label {
+    display: block;
+
+    width: 100%;
+
+    margin: 0;
+
+    color:
+        var(--perfil-texto);
+
+    font-size: 0.8rem;
+    font-weight: 750;
+
+    line-height: 1.4;
+}
+
+
+.editar-perfil-campo input,
+.editar-perfil-campo textarea {
+    display: block;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding:
+        13px
+        14px;
+
+    background:
+        var(--perfil-fundo-secundario);
+
+    border:
+        1px solid
+        var(--perfil-borda);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    color:
+        var(--perfil-texto);
+
+    font: inherit;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.editar-perfil-campo input {
+    min-height: 48px;
+}
+
+
+.editar-perfil-campo textarea {
+    min-height: 145px;
+
+    resize: vertical;
+
+    line-height: 1.65;
+}
+
+
+.editar-perfil-campo input::placeholder,
+.editar-perfil-campo textarea::placeholder {
+    color:
+        var(--perfil-texto-suave);
+
+    opacity: 0.75;
+}
+
+
+.editar-perfil-campo input:focus,
+.editar-perfil-campo textarea:focus {
+    border-color:
+        var(--perfil-azul-claro);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(54, 186, 241, 0.10);
+}
+
+
+/* =========================================================
+   TEXTOS AUXILIARES
+========================================================= */
+
+.editar-perfil-campo > small {
+    display: block;
+
+    width: 100%;
+
+    margin: 0;
+
+    color:
+        var(--perfil-texto-suave);
+
+    font-size: 0.7rem;
+
+    line-height: 1.5;
+
+    word-break: normal;
+}
+
+
+.editar-perfil-campo-rodape {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    width: 100%;
+}
+
+
+.editar-perfil-campo-rodape small {
+    display: block;
+
+    margin: 0;
+
+    color:
+        var(--perfil-texto-suave);
+
+    font-size: 0.7rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   AVISO
+========================================================= */
+
+.editar-perfil-aviso {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 24px;
+
+    padding:
+        17px
+        18px;
+
+    background:
+        rgba(54, 186, 241, 0.05);
+
+    border:
+        1px solid
+        rgba(54, 186, 241, 0.13);
+
+    border-left:
+        4px solid
+        var(--perfil-azul-claro);
+
+    border-radius: 10px;
+}
+
+
+.editar-perfil-aviso strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        var(--perfil-texto);
+
+    font-size: 0.8rem;
+}
+
+
+.editar-perfil-aviso p {
+    display: block;
+
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0;
+
+    color:
+        var(--perfil-texto-secundario);
+
+    font-size: 0.75rem;
+
+    line-height: 1.6;
+
+    word-break: normal;
+    overflow-wrap: normal;
+}
+
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.editar-perfil-acoes {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    width: 100%;
+
+    margin-top: 26px;
+
+    padding-top: 22px;
+
+    border-top:
+        1px solid
+        var(--perfil-borda);
+}
+
+
+.editar-perfil-cancelar,
+.editar-perfil-salvar {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding:
+        0
+        19px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 750;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   CANCELAR
+========================================================= */
+
+.editar-perfil-cancelar {
+    border:
+        1px solid
+        var(--perfil-borda-forte);
+
+    background:
+        transparent;
+
+    color:
+        var(--perfil-texto);
+
+    text-decoration: none;
+}
+
+
+.editar-perfil-cancelar:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(54, 186, 241, 0.32);
+
+    background:
+        rgba(54, 186, 241, 0.05);
+}
+
+
+/* =========================================================
+   SALVAR
+========================================================= */
+
+.editar-perfil-salvar {
+    border: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--perfil-azul),
+            var(--perfil-azul-claro)
+        );
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 22px
+        rgba(36, 85, 166, 0.20);
+}
+
+
+.editar-perfil-salvar:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(36, 85, 166, 0.28);
+}
+
+
+/* =========================================================
+   TEMA CLARO
+========================================================= */
+
+body.light-mode
+.editar-perfil-campo input,
+
+body.light-mode
+.editar-perfil-campo textarea,
+
+body.light-mode
+.editar-perfil-conta {
+    background:
+        #f7f9fc;
+}
+
+
+body.light-mode
+.editar-perfil-card {
+    box-shadow:
+        0 12px 35px
+        rgba(32, 61, 105, 0.07);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (
+    max-width: 800px
+) {
+
+    .editar-perfil-container {
+        width:
+            min(
+                calc(100% - 30px),
+                980px
+            );
+
+        padding-top:
+            34px;
+    }
+
+
+    .editar-perfil-cabecalho {
+        flex-direction:
+            column;
+
+        padding:
+            28px;
+    }
+
+
+    .editar-perfil-voltar {
+        align-self:
+            flex-start;
+    }
+
+
+    .editar-perfil-card {
+        padding:
+            26px;
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (
+    max-width: 650px
+) {
+
+    .editar-perfil-container {
+        width:
+            calc(100% - 22px);
+
+        padding:
+            24px
+            0
+            60px;
+    }
+
+
+    .editar-perfil-cabecalho {
+        gap: 22px;
+
+        padding:
+            24px
+            20px;
+
+        border-radius:
+            17px;
+    }
+
+
+    .editar-perfil-cabecalho h1 {
+        font-size:
+            1.8rem;
+    }
+
+
+    .editar-perfil-voltar {
+        width: 100%;
+    }
+
+
+    .editar-perfil-card {
+        padding:
+            22px
+            18px;
+    }
+
+
+    .editar-perfil-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .editar-perfil-campo-largo {
+        grid-column:
+            auto;
+    }
+
+
+    .editar-perfil-conta {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+    }
+
+
+    .editar-perfil-conta > span {
+        white-space:
+            normal;
+    }
+
+
+    .editar-perfil-campo-rodape {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+        gap: 3px;
+    }
+
+
+    .editar-perfil-acoes {
+        flex-direction:
+            column-reverse;
+
+        align-items:
+            stretch;
+    }
+
+
+    .editar-perfil-cancelar,
+    .editar-perfil-salvar {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   TELAS PEQUENAS
+========================================================= */
+
+@media (
+    max-width: 420px
+) {
+
+    .editar-perfil-container {
+        width:
+            calc(100% - 16px);
+    }
+
+
+    .editar-perfil-cabecalho {
+        padding:
+            21px
+            17px;
+    }
+
+
+    .editar-perfil-card {
+        padding:
+            19px
+            15px;
+    }
+
+}
+
+/* ==========================================================
+   CONFIGURAÇÃO DE APARÊNCIA
+========================================================== */
+
+.editar-perfil-aparencia {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+
+    margin-top: 30px;
+    padding: 28px 30px;
+
+    background: var(--card-bg);
+
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 18px;
+
+    box-shadow: var(--shadow);
+}
+
+.editar-perfil-aparencia-texto {
+    flex: 1;
+}
+
+.editar-perfil-aparencia-texto h2 {
+    margin: 8px 0 8px;
+
+    color: var(--text);
+
+    font-size: 20px;
+}
+
+.editar-perfil-aparencia-texto p {
+    max-width: 620px;
+
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    line-height: 1.6;
+}
+
+.editar-perfil-tema-controle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    flex-shrink: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/*
+O botão deixa de ser flutuante somente dentro
+da página de configurações.
+*/
+
+.editar-perfil-tema-controle .tema-toggle {
+    position: static;
+
+    top: auto;
+    right: auto;
+
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+
+    .editar-perfil-aparencia {
+        flex-direction: column;
+        align-items: flex-start;
+
+        padding: 22px;
+    }
+
+    .editar-perfil-tema-controle {
+        width: 100%;
+
+        justify-content: flex-start;
+    }
+
+}

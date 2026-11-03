@@ -1,0 +1,155 @@
+/* ==========================================================
+   CONFIGURAÇÃO DE TEMA
+========================================================== */
+
+.editar-perfil-aparencia {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    width: 100%;
+
+    margin:
+        30px
+        0;
+
+    padding:
+        28px
+        30px;
+
+    background:
+        var(--card-bg);
+
+    border:
+        1px
+        solid
+        rgba(
+            148,
+            163,
+            184,
+            0.16
+        );
+
+    border-radius:
+        18px;
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.editar-perfil-aparencia-texto {
+    flex: 1;
+}
+
+
+.editar-perfil-etiqueta {
+    color:
+        var(--primary);
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        0.12em;
+}
+
+
+.editar-perfil-aparencia-texto h2 {
+    margin:
+        8px
+        0
+        8px;
+
+    color:
+        var(--text);
+
+    font-size:
+        22px;
+}
+
+
+.editar-perfil-aparencia-texto p {
+    max-width:
+        620px;
+
+    margin:
+        0;
+
+    color:
+        var(--text-secondary);
+
+    line-height:
+        1.6;
+}
+
+
+.editar-perfil-tema-controle {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+
+    color:
+        var(--text-secondary);
+
+    font-size:
+        14px;
+
+    font-weight:
+        600;
+}
+
+
+/*
+O switch deixa de ser flutuante
+dentro da configuração.
+*/
+
+.editar-perfil-tema-controle .tema-toggle {
+    position: static;
+
+    top: auto;
+    right: auto;
+
+    margin: 0;
+}
+
+
+/* ==========================================================
+   RESPONSIVIDADE
+========================================================== */
+
+@media (max-width: 700px) {
+
+    .editar-perfil-aparencia {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+        gap:
+            20px;
+
+        padding:
+            22px;
+    }
+
+
+    .editar-perfil-tema-controle {
+        width:
+            100%;
+
+        justify-content:
+            flex-start;
+    }
+
+}

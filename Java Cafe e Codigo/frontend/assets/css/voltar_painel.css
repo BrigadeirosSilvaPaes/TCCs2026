@@ -1,0 +1,285 @@
+/*
+|--------------------------------------------------------------------------
+| VOLTAR AO PAINEL
+|--------------------------------------------------------------------------
+|
+| Utiliza a cor primária global da plataforma.
+|
+|--------------------------------------------------------------------------
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| CONTAINER
+|--------------------------------------------------------------------------
+*/
+
+.voltar-painel {
+    position: fixed;
+
+    top: 88px;
+    left: 22px;
+
+    width: auto;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+
+    z-index: 900;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| BOTÃO
+|--------------------------------------------------------------------------
+*/
+
+.voltar-painel-link {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 10px;
+
+    /*
+    |--------------------------------------------------------------------------
+    | COR PADRÃO DA PLATAFORMA
+    |--------------------------------------------------------------------------
+    */
+
+    background:
+        var(
+            --cor-primaria,
+            #6f4e37
+        );
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 16px
+        rgba(0, 0, 0, 0.14);
+
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SETA
+|--------------------------------------------------------------------------
+*/
+
+.voltar-painel-seta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.1rem;
+    font-weight: 800;
+
+    line-height: 1;
+
+    transition:
+        transform 0.18s ease;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| HOVER
+|--------------------------------------------------------------------------
+|
+| Não utiliza outra cor fixa.
+|
+| Apenas escurece a própria cor primária da plataforma.
+|
+|--------------------------------------------------------------------------
+*/
+
+.voltar-painel-link:hover {
+    color: #ffffff;
+
+    transform:
+        translateY(-1px);
+
+    filter:
+        brightness(0.9);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0, 0, 0, 0.18);
+}
+
+
+.voltar-painel-link:hover
+.voltar-painel-seta {
+    transform:
+        translateX(-3px);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FOCO
+|--------------------------------------------------------------------------
+*/
+
+.voltar-painel-link:focus-visible {
+    outline:
+        3px solid
+        color-mix(
+            in srgb,
+            var(--cor-primaria, #6f4e37) 35%,
+            transparent
+        );
+
+    outline-offset: 3px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CLIQUE
+|--------------------------------------------------------------------------
+*/
+
+.voltar-painel-link:active {
+    transform:
+        translateY(0);
+
+    filter:
+        brightness(0.82);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TEMA ESCURO
+|--------------------------------------------------------------------------
+|
+| Continua utilizando a mesma identidade visual.
+|
+|--------------------------------------------------------------------------
+*/
+
+body.dark
+.voltar-painel-link,
+
+body.tema-escuro
+.voltar-painel-link,
+
+html[data-theme="dark"]
+.voltar-painel-link,
+
+body[data-theme="dark"]
+.voltar-painel-link {
+    background:
+        var(
+            --cor-primaria,
+            #6f4e37
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0, 0, 0, 0.32);
+}
+
+
+body.dark
+.voltar-painel-link:hover,
+
+body.tema-escuro
+.voltar-painel-link:hover,
+
+html[data-theme="dark"]
+.voltar-painel-link:hover,
+
+body[data-theme="dark"]
+.voltar-painel-link:hover {
+    color: #ffffff;
+
+    filter:
+        brightness(1.08);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TABLETS
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 768px) {
+
+    .voltar-painel {
+        top: 76px;
+        left: 14px;
+    }
+
+
+    .voltar-painel-link {
+        min-height: 40px;
+
+        padding:
+            9px 13px;
+
+        font-size: 0.84rem;
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CELULARES
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 480px) {
+
+    .voltar-painel {
+        top: 72px;
+        left: 10px;
+    }
+
+
+    .voltar-painel-link {
+        min-height: 38px;
+
+        padding:
+            8px 11px;
+
+        border-radius: 8px;
+
+        font-size: 0.8rem;
+    }
+
+
+    .voltar-painel-seta {
+        font-size: 1rem;
+    }
+
+}

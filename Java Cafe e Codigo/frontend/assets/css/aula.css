@@ -1,0 +1,1281 @@
+/*
+|--------------------------------------------------------------------------
+| PÁGINA DAS AULAS
+|--------------------------------------------------------------------------
+*/
+
+body {
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(56, 189, 248, 0.07),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 95% 45%,
+            rgba(99, 102, 241, 0.05),
+            transparent 25%
+        ),
+        #11131f;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CONTAINER PRINCIPAL
+|--------------------------------------------------------------------------
+*/
+
+.aula-container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding:
+        42px
+        clamp(20px, 4vw, 72px)
+        85px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CABEÇALHO DA AULA
+|--------------------------------------------------------------------------
+*/
+
+.aula-cabecalho {
+    position: relative;
+    width: 100%;
+    min-height: 330px;
+    margin-bottom: 22px;
+    padding: 55px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    border-radius: 24px;
+    background:
+        linear-gradient(
+            120deg,
+            rgba(56, 189, 248, 0.10),
+            rgba(27, 28, 45, 0.97) 48%,
+            rgba(99, 102, 241, 0.07)
+        );
+    box-shadow:
+        0 24px 55px rgba(0, 0, 0, 0.18);
+}
+
+.aula-cabecalho::before {
+    content: "</>";
+    position: absolute;
+    top: 50%;
+    right: 6%;
+    transform: translateY(-50%);
+    color: rgba(56, 189, 248, 0.055);
+    font-family: Consolas, monospace;
+    font-size: clamp(8rem, 18vw, 15rem);
+    font-weight: 900;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.aula-cabecalho::after {
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: rgba(56, 189, 248, 0.06);
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+.aula-numero {
+    position: relative;
+    z-index: 1;
+    width: fit-content;
+    margin-bottom: 18px;
+    padding: 8px 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    border-radius: 9px;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.07);
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+}
+
+.aula-cabecalho h1 {
+    position: relative;
+    z-index: 1;
+    max-width: 850px;
+    margin: 0;
+    color: #f8fafc;
+    font-size: clamp(2.7rem, 6vw, 5rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+}
+
+.aula-cabecalho p {
+    position: relative;
+    z-index: 1;
+    max-width: 710px;
+    margin: 24px 0 0;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SEÇÕES DA AULA
+|--------------------------------------------------------------------------
+*/
+
+.aula-secao {
+    position: relative;
+    width: 100%;
+    margin-top: 22px;
+    padding: 38px;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.11);
+    border-radius: 21px;
+    background: rgba(27, 28, 45, 0.93);
+    box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.11);
+}
+
+.aula-secao::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 38px;
+    width: 55px;
+    height: 3px;
+    border-radius: 0 0 5px 5px;
+    background: #38bdf8;
+}
+
+.aula-secao h2 {
+    margin: 0 0 23px;
+    color: #f8fafc;
+    font-size: clamp(1.55rem, 3vw, 2.05rem);
+    line-height: 1.25;
+    letter-spacing: -0.035em;
+}
+
+.aula-secao h3 {
+    margin: 34px 0 13px;
+    color: #38bdf8;
+    font-size: 1.08rem;
+    line-height: 1.4;
+}
+
+.aula-secao p {
+    max-width: 920px;
+    margin: 0 0 18px;
+    color: #94a3b8;
+    font-size: 0.82rem;
+    line-height: 1.85;
+}
+
+.aula-secao p:last-child {
+    margin-bottom: 0;
+}
+
+.aula-secao strong {
+    color: #e2e8f0;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| DESTAQUES
+|--------------------------------------------------------------------------
+*/
+
+.aula-destaque {
+    position: relative;
+    margin: 27px 0;
+    padding: 23px 25px 23px 28px;
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, 0.13);
+    border-left: 4px solid #38bdf8;
+    border-radius: 0 14px 14px 0;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(56, 189, 248, 0.08),
+            rgba(56, 189, 248, 0.025)
+        );
+}
+
+.aula-destaque::after {
+    content: "!";
+    position: absolute;
+    top: 50%;
+    right: 22px;
+    transform: translateY(-50%);
+    color: rgba(56, 189, 248, 0.06);
+    font-size: 5rem;
+    font-weight: 900;
+    pointer-events: none;
+}
+
+.aula-destaque strong {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin-bottom: 9px;
+    color: #38bdf8;
+    font-size: 0.85rem;
+}
+
+.aula-destaque p {
+    position: relative;
+    z-index: 1;
+    max-width: 850px;
+    margin: 0 0 8px;
+    color: #a8b4c7;
+    font-size: 0.78rem;
+    line-height: 1.75;
+}
+
+.aula-destaque p:last-child {
+    margin-bottom: 0;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CÓDIGO JAVA — ESTILO EDITOR
+|--------------------------------------------------------------------------
+*/
+
+.codigo-java {
+    position: relative;
+    width: 100%;
+    min-height: 125px;
+    margin: 28px 0;
+    padding: 67px 27px 27px;
+    overflow-x: auto;
+    border: 1px solid rgba(148, 163, 184, 0.13);
+    border-radius: 17px;
+    color: #cbd5e1;
+    background:
+        linear-gradient(
+            to bottom,
+            #111827 0,
+            #111827 43px,
+            #0b1020 43px,
+            #0b1020 100%
+        );
+    box-shadow:
+        0 22px 42px rgba(0, 0, 0, 0.23);
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.75rem;
+    line-height: 1.85;
+    white-space: pre;
+    tab-size: 4;
+}
+
+.codigo-java::before {
+    content: "●   ●   ●                                      Main.java";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 43px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.10);
+    color: #64748b;
+    font-family: Consolas, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+    box-sizing: border-box;
+}
+
+.codigo-java code {
+    display: block;
+    min-width: max-content;
+    color: #cbd5e1;
+    font-family: Consolas, "Courier New", monospace;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RESULTADO DO CÓDIGO — ESTILO CONSOLE
+|--------------------------------------------------------------------------
+*/
+
+.resultado-codigo {
+    position: relative;
+    width: 100%;
+    min-height: 105px;
+    margin: 22px 0 28px;
+    padding: 57px 25px 22px;
+    overflow-x: auto;
+    border: 1px solid rgba(74, 222, 128, 0.16);
+    border-radius: 15px;
+    color: #bbf7d0;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(34, 197, 94, 0.075) 0,
+            rgba(34, 197, 94, 0.075) 40px,
+            rgba(15, 23, 42, 0.78) 40px,
+            rgba(15, 23, 42, 0.78) 100%
+        );
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.72rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.resultado-codigo::before {
+    content: "SAÍDA DO CONSOLE";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    padding: 0 17px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(74, 222, 128, 0.10);
+    color: #4ade80;
+    font-family: inherit;
+    font-size: 0.55rem;
+    font-weight: 900;
+    letter-spacing: 0.11em;
+    box-sizing: border-box;
+}
+
+.resultado-codigo code {
+    color: inherit;
+    font-family: Consolas, "Courier New", monospace;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TABELAS
+|--------------------------------------------------------------------------
+*/
+
+.aula-tabela {
+    width: 100%;
+    margin: 28px 0;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 15px;
+    background: rgba(15, 17, 30, 0.40);
+}
+
+.aula-tabela-linha {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1.5fr;
+    align-items: stretch;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.aula-tabela-linha:last-child {
+    border-bottom: none;
+}
+
+.aula-tabela-linha span {
+    min-height: 58px;
+    padding: 16px 19px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid rgba(148, 163, 184, 0.06);
+    color: #94a3b8;
+    font-size: 0.7rem;
+    line-height: 1.5;
+}
+
+.aula-tabela-linha span:last-child {
+    border-right: none;
+}
+
+.aula-tabela-cabecalho {
+    background: rgba(56, 189, 248, 0.07);
+}
+
+.aula-tabela-cabecalho span {
+    color: #e2e8f0;
+    font-size: 0.64rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| LISTAS
+|--------------------------------------------------------------------------
+*/
+
+.aula-secao ul,
+.aula-resumo ul {
+    margin: 22px 0 27px;
+    padding: 0;
+    list-style: none;
+}
+
+.aula-secao li,
+.aula-resumo li {
+    position: relative;
+    margin-bottom: 11px;
+    padding: 13px 17px 13px 43px;
+    border: 1px solid rgba(148, 163, 184, 0.08);
+    border-radius: 11px;
+    color: #94a3b8;
+    background: rgba(15, 17, 30, 0.32);
+    font-size: 0.74rem;
+    line-height: 1.65;
+}
+
+.aula-secao li::before,
+.aula-resumo li::before {
+    content: "✓";
+    position: absolute;
+    top: 13px;
+    left: 17px;
+    color: #38bdf8;
+    font-size: 0.78rem;
+    font-weight: 900;
+}
+
+.aula-secao li strong,
+.aula-resumo li strong {
+    color: #38bdf8;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RESUMO DA AULA
+|--------------------------------------------------------------------------
+*/
+
+.aula-resumo {
+    position: relative;
+    width: 100%;
+    margin-top: 22px;
+    padding: 42px;
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    border-radius: 21px;
+    background:
+        linear-gradient(
+            120deg,
+            rgba(56, 189, 248, 0.10),
+            rgba(27, 28, 45, 0.94)
+        );
+    box-shadow:
+        0 17px 40px rgba(0, 0, 0, 0.12);
+}
+
+.aula-resumo::after {
+    content: "✓";
+    position: absolute;
+    right: 35px;
+    bottom: -35px;
+    color: rgba(56, 189, 248, 0.055);
+    font-size: 11rem;
+    font-weight: 900;
+    pointer-events: none;
+}
+
+.aula-resumo h2 {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 21px;
+    color: #f8fafc;
+    font-size: 1.8rem;
+    letter-spacing: -0.035em;
+}
+
+.aula-resumo h3 {
+    position: relative;
+    z-index: 1;
+    margin: 30px 0 12px;
+    color: #38bdf8;
+    font-size: 1.05rem;
+}
+
+.aula-resumo p {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 0 18px;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    line-height: 1.8;
+}
+
+.aula-resumo ul,
+.aula-resumo .aula-destaque {
+    position: relative;
+    z-index: 1;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FRASE FINAL
+|--------------------------------------------------------------------------
+*/
+
+.aula-frase {
+    position: relative;
+    width: 100%;
+    margin-top: 22px;
+    padding: 38px 42px;
+    overflow: hidden;
+    text-align: center;
+    border: 1px solid rgba(148, 163, 184, 0.10);
+    border-radius: 20px;
+    background: rgba(27, 28, 45, 0.91);
+}
+
+.aula-frase::before {
+    content: "“";
+    position: absolute;
+    top: -24px;
+    left: 26px;
+    color: rgba(56, 189, 248, 0.10);
+    font-family: Georgia, serif;
+    font-size: 9rem;
+    line-height: 1;
+}
+
+.aula-frase p {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    color: #38bdf8;
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.8;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| NAVEGAÇÃO ENTRE AULAS
+|--------------------------------------------------------------------------
+*/
+
+.aula-acoes {
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.aula-botao {
+    min-height: 50px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(148, 163, 184, 0.13);
+    border-radius: 12px;
+    color: #94a3b8;
+    background: rgba(27, 28, 45, 0.92);
+    font-size: 0.68rem;
+    font-weight: 900;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.aula-botao:hover {
+    transform: translateY(-3px);
+    border-color: rgba(56, 189, 248, 0.32);
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.06);
+    box-shadow:
+        0 13px 28px rgba(0, 0, 0, 0.14);
+}
+
+.aula-acoes .aula-botao:last-child {
+    border-color: #38bdf8;
+    color: #082f49;
+    background: #38bdf8;
+}
+
+.aula-acoes .aula-botao:last-child:hover {
+    color: #082f49;
+    background: #7dd3fc;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CADERNO JAVA
+|--------------------------------------------------------------------------
+*/
+
+.caderno-topico {
+    margin-bottom: 24px;
+    padding: 27px;
+    border: 1px solid rgba(148, 163, 184, 0.10);
+    border-radius: 16px;
+    background: rgba(15, 17, 30, 0.35);
+}
+
+.caderno-topico:last-child {
+    margin-bottom: 0;
+}
+
+.caderno-topico h3 {
+    margin: 0 0 13px;
+    color: #38bdf8;
+    font-size: 1rem;
+}
+
+.caderno-pergunta {
+    margin-bottom: 16px;
+    color: #94a3b8;
+    font-size: 0.76rem;
+    line-height: 1.75;
+}
+
+.caderno-pergunta strong {
+    color: #e2e8f0;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| ÁREA DE TEXTO DO CADERNO
+|--------------------------------------------------------------------------
+*/
+
+.caderno-textarea {
+    display: block;
+    width: 100%;
+    min-height: 145px;
+    margin-top: 15px;
+    padding: 18px 20px;
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 13px;
+    outline: none;
+    color: #e2e8f0;
+    background: rgba(11, 16, 32, 0.72);
+    font-family: inherit;
+    font-size: 0.75rem;
+    line-height: 1.7;
+    resize: vertical;
+    box-sizing: border-box;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.caderno-textarea::placeholder {
+    color: #64748b;
+}
+
+.caderno-textarea:focus {
+    border-color: rgba(56, 189, 248, 0.45);
+    background: #0b1020;
+    box-shadow:
+        0 0 0 3px rgba(56, 189, 248, 0.08);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| AÇÕES DO CADERNO
+|--------------------------------------------------------------------------
+*/
+
+.caderno-acoes {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    flex-wrap: wrap;
+}
+
+.caderno-botao {
+    min-height: 48px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(148, 163, 184, 0.13);
+    border-radius: 12px;
+    color: #94a3b8;
+    background: rgba(15, 17, 30, 0.46);
+    font-family: inherit;
+    font-size: 0.67rem;
+    font-weight: 900;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.caderno-botao:hover {
+    transform: translateY(-3px);
+    border-color: rgba(56, 189, 248, 0.32);
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.06);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+body.light-mode,
+.light-mode body {
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(14, 165, 233, 0.09),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 95% 45%,
+            rgba(99, 102, 241, 0.06),
+            transparent 25%
+        ),
+        #f1f5f9;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CABEÇALHO — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .aula-cabecalho {
+    border-color: rgba(15, 23, 42, 0.09);
+    background:
+        linear-gradient(
+            120deg,
+            rgba(14, 165, 233, 0.09),
+            rgba(255, 255, 255, 0.98) 48%,
+            rgba(99, 102, 241, 0.05)
+        );
+    box-shadow:
+        0 22px 55px rgba(15, 23, 42, 0.08);
+}
+
+.light-mode .aula-cabecalho::before {
+    color: rgba(2, 132, 199, 0.06);
+}
+
+.light-mode .aula-numero {
+    border-color: rgba(2, 132, 199, 0.16);
+    color: #0284c7;
+    background: rgba(14, 165, 233, 0.08);
+}
+
+.light-mode .aula-cabecalho h1 {
+    color: #0f172a;
+}
+
+.light-mode .aula-cabecalho p {
+    color: #475569;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SEÇÕES — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .aula-secao {
+    border-color: rgba(15, 23, 42, 0.09);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+        0 16px 40px rgba(15, 23, 42, 0.06);
+}
+
+.light-mode .aula-secao::before {
+    background: #0284c7;
+}
+
+.light-mode .aula-secao h2 {
+    color: #0f172a;
+}
+
+.light-mode .aula-secao h3 {
+    color: #0284c7;
+}
+
+.light-mode .aula-secao p {
+    color: #475569;
+}
+
+.light-mode .aula-secao strong {
+    color: #0f172a;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| DESTAQUES — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .aula-destaque {
+    border-color: rgba(2, 132, 199, 0.14);
+    border-left-color: #0284c7;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(14, 165, 233, 0.08),
+            rgba(14, 165, 233, 0.02)
+        );
+}
+
+.light-mode .aula-destaque strong {
+    color: #0284c7;
+}
+
+.light-mode .aula-destaque p {
+    color: #475569;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CÓDIGO — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .codigo-java {
+    border-color: rgba(15, 23, 42, 0.17);
+    box-shadow:
+        0 20px 42px rgba(15, 23, 42, 0.13);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RESULTADO — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .resultado-codigo {
+    border-color: rgba(22, 163, 74, 0.17);
+    color: #166534;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(34, 197, 94, 0.09) 0,
+            rgba(34, 197, 94, 0.09) 40px,
+            rgba(240, 253, 244, 0.96) 40px,
+            rgba(240, 253, 244, 0.96) 100%
+        );
+}
+
+.light-mode .resultado-codigo::before {
+    color: #15803d;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TABELA — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .aula-tabela {
+    border-color: rgba(15, 23, 42, 0.09);
+    background: #ffffff;
+}
+
+.light-mode .aula-tabela-linha {
+    border-bottom-color: rgba(15, 23, 42, 0.07);
+}
+
+.light-mode .aula-tabela-linha span {
+    border-right-color: rgba(15, 23, 42, 0.06);
+    color: #475569;
+}
+
+.light-mode .aula-tabela-cabecalho {
+    background: rgba(14, 165, 233, 0.07);
+}
+
+.light-mode .aula-tabela-cabecalho span {
+    color: #0f172a;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| LISTAS — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .aula-secao li,
+.light-mode .aula-resumo li {
+    border-color: rgba(15, 23, 42, 0.07);
+    color: #475569;
+    background: #f8fafc;
+}
+
+.light-mode .aula-secao li::before,
+.light-mode .aula-resumo li::before {
+    color: #0284c7;
+}
+
+.light-mode .aula-secao li strong,
+.light-mode .aula-resumo li strong {
+    color: #0284c7;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RESUMO — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .aula-resumo {
+    border-color: rgba(2, 132, 199, 0.16);
+    background:
+        linear-gradient(
+            120deg,
+            rgba(14, 165, 233, 0.08),
+            rgba(255, 255, 255, 0.97)
+        );
+    box-shadow:
+        0 16px 40px rgba(15, 23, 42, 0.06);
+}
+
+.light-mode .aula-resumo h2 {
+    color: #0f172a;
+}
+
+.light-mode .aula-resumo h3 {
+    color: #0284c7;
+}
+
+.light-mode .aula-resumo p {
+    color: #475569;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FRASE — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .aula-frase {
+    border-color: rgba(15, 23, 42, 0.09);
+    background: #ffffff;
+    box-shadow:
+        0 15px 35px rgba(15, 23, 42, 0.05);
+}
+
+.light-mode .aula-frase p {
+    color: #0284c7;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| BOTÕES — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .aula-botao,
+.light-mode .caderno-botao {
+    border-color: rgba(15, 23, 42, 0.10);
+    color: #475569;
+    background: #ffffff;
+}
+
+.light-mode .aula-botao:hover,
+.light-mode .caderno-botao:hover {
+    border-color: rgba(2, 132, 199, 0.30);
+    color: #0284c7;
+    background: rgba(14, 165, 233, 0.06);
+}
+
+.light-mode .aula-acoes .aula-botao:last-child {
+    border-color: #0284c7;
+    color: #ffffff;
+    background: #0284c7;
+}
+
+.light-mode .aula-acoes .aula-botao:last-child:hover {
+    color: #ffffff;
+    background: #0369a1;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CADERNO — TEMA CLARO
+|--------------------------------------------------------------------------
+*/
+
+.light-mode .caderno-topico {
+    border-color: rgba(15, 23, 42, 0.08);
+    background: #f8fafc;
+}
+
+.light-mode .caderno-topico h3 {
+    color: #0284c7;
+}
+
+.light-mode .caderno-pergunta {
+    color: #475569;
+}
+
+.light-mode .caderno-pergunta strong {
+    color: #0f172a;
+}
+
+.light-mode .caderno-textarea {
+    border-color: rgba(15, 23, 42, 0.10);
+    color: #0f172a;
+    background: #ffffff;
+}
+
+.light-mode .caderno-textarea::placeholder {
+    color: #94a3b8;
+}
+
+.light-mode .caderno-textarea:focus {
+    border-color: rgba(2, 132, 199, 0.40);
+    background: #ffffff;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TELAS GRANDES
+|--------------------------------------------------------------------------
+*/
+
+@media (min-width: 1500px) {
+
+    .aula-container {
+        max-width: 1380px;
+    }
+
+    .aula-cabecalho {
+        min-height: 360px;
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TABLETS
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 900px) {
+
+    .aula-container {
+        padding:
+            35px
+            22px
+            65px;
+    }
+
+    .aula-cabecalho {
+        min-height: 290px;
+        padding: 45px 35px;
+    }
+
+    .aula-cabecalho::before {
+        right: 2%;
+        opacity: 0.65;
+    }
+
+    .aula-secao {
+        padding: 32px;
+    }
+
+    .aula-resumo {
+        padding: 35px;
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CELULARES
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 650px) {
+
+    .aula-container {
+        padding:
+            27px
+            15px
+            55px;
+    }
+
+    .aula-cabecalho {
+        min-height: 260px;
+        padding: 35px 24px;
+        border-radius: 20px;
+    }
+
+    .aula-cabecalho::before {
+        top: auto;
+        right: -15px;
+        bottom: -20px;
+        transform: none;
+        font-size: 8rem;
+    }
+
+    .aula-cabecalho h1 {
+        font-size: clamp(2.2rem, 12vw, 3.25rem);
+    }
+
+    .aula-cabecalho p {
+        font-size: 0.78rem;
+    }
+
+    .aula-secao {
+        margin-top: 17px;
+        padding: 29px 21px;
+        border-radius: 18px;
+    }
+
+    .aula-secao::before {
+        left: 21px;
+    }
+
+    .aula-secao h2 {
+        font-size: 1.45rem;
+    }
+
+    .aula-secao h3 {
+        font-size: 1rem;
+    }
+
+    .aula-secao p {
+        font-size: 0.76rem;
+        line-height: 1.75;
+    }
+
+    .aula-destaque {
+        padding: 20px;
+    }
+
+    .codigo-java {
+        margin: 23px 0;
+        padding:
+            62px
+            18px
+            21px;
+        border-radius: 14px;
+        font-size: 0.67rem;
+    }
+
+    .codigo-java::before {
+        content: "●   ●   ●              Main.java";
+        font-size: 0.53rem;
+    }
+
+    .resultado-codigo {
+        padding:
+            55px
+            18px
+            20px;
+        font-size: 0.66rem;
+    }
+
+    .aula-tabela {
+        overflow-x: auto;
+    }
+
+    .aula-tabela-linha {
+        min-width: 560px;
+    }
+
+    .aula-resumo {
+        margin-top: 17px;
+        padding: 30px 21px;
+        border-radius: 18px;
+    }
+
+    .aula-resumo h2 {
+        font-size: 1.5rem;
+    }
+
+    .aula-frase {
+        padding: 32px 22px;
+    }
+
+    .aula-frase p {
+        font-size: 0.8rem;
+    }
+
+    .aula-acoes {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .aula-botao {
+        width: 100%;
+    }
+
+    .caderno-topico {
+        padding: 22px 18px;
+    }
+
+    .caderno-textarea {
+        min-height: 125px;
+        padding: 16px;
+    }
+
+    .caderno-acoes {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .caderno-botao {
+        width: 100%;
+    }
+
+}
