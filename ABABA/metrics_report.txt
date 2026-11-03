@@ -1,0 +1,21 @@
+Avaliação aninhada por validação cruzada agrupada
+Acurácia OOF baseline: 0.8170
+Acurácia OOF ajustado: 0.8170
+ROC-AUC OOF ajustado: 0.8948
+
+Relatório de classificação OOF:
+              precision    recall  f1-score   support
+
+    Saudável     0.8239    0.8667    0.8448       135
+Com Demência     0.8065    0.7500    0.7772       100
+
+    accuracy                         0.8170       235
+   macro avg     0.8152    0.8083    0.8110       235
+weighted avg     0.8165    0.8170    0.8160       235
+
+Matriz de confusão OOF [[VN, FP], [FN, VP]]:
+[[117  18]
+ [ 25  75]]
+
+Parâmetros finais: {'max_depth': None, 'max_features': 'sqrt', 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 400}
+Falsos negativos: [{'ID': 'OAS1_0015_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0035_MR1', 'CDR': 1.0}, {'ID': 'OAS1_0039_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0041_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0060_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0066_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0082_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0094_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0143_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0155_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0238_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0267_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0272_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0278_MR1', 'CDR': 1.0}, {'ID': 'OAS1_0300_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0304_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0329_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0352_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0374_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0399_MR1', 'CDR': 1.0}, {'ID': 'OAS1_0402_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0411_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0418_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0441_MR1', 'CDR': 0.5}, {'ID': 'OAS1_0453_MR1', 'CDR': 0.5}]
