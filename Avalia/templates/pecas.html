@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Peças - Avalia</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: linear-gradient(
+                135deg,
+                #dceeff,
+                #c9e4ff
+            );
+
+            min-height: 100vh;
+
+            padding-bottom: 120px;
+
+        }
+
+
+        /* ========================= */
+        /* CABEÇALHO */
+        /* ========================= */
+
+        .topo {
+
+            height: 110px;
+
+            background: #293f8f;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 40px;
+
+            color: white;
+
+        }
+
+
+        /* LOGO */
+
+        .logo {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* ABAS DO CANTO SUPERIOR DIREITO */
+
+        .menu {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .menu a {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            padding: 13px 16px;
+
+            border-radius: 15px;
+
+            transition: 0.2s;
+
+            white-space: nowrap;
+
+        }
+
+
+        .menu a:hover {
+
+            background: rgba(255,255,255,0.2);
+
+        }
+
+
+        /* ABA ATUAL */
+
+        .menu .ativo {
+
+            background: #72dc50;
+
+        }
+
+
+        /* ========================= */
+        /* CONTEÚDO */
+        /* ========================= */
+
+        .conteudo {
+
+            width: 90%;
+
+            max-width: 1100px;
+
+            margin: 35px auto;
+
+        }
+
+
+        .titulo {
+
+            color: #293f8f;
+
+            font-size: 36px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* ========================= */
+        /* CAMPO DE PESQUISA */
+        /* ========================= */
+
+        .pesquisa {
+
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 10px;
+
+            display: flex;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
+        }
+
+
+        .pesquisa input {
+
+            flex: 1;
+
+            border: none;
+
+            outline: none;
+
+            padding: 18px;
+
+            font-size: 18px;
+
+        }
+
+
+        .pesquisa button {
+
+            width: 60px;
+
+            border: none;
+
+            border-radius: 18px;
+
+            background: #72dc50;
+
+            font-size: 22px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* ========================= */
+        /* CATEGORIAS */
+        /* ========================= */
+
+        .categorias {
+
+            display: flex;
+
+            gap: 15px;
+
+            margin: 25px 0;
+
+            overflow-x: auto;
+
+        }
+
+
+        .categoria {
+
+            background: white;
+
+            border: none;
+
+            border-radius: 25px;
+
+            padding: 15px 25px;
+
+            font-size: 16px;
+
+            white-space: nowrap;
+
+            cursor: pointer;
+
+        }
+
+
+        .categoria.ativa {
+
+            background: #72dc50;
+
+            color: white;
+
+        }
+
+
+        /* ========================= */
+        /* LISTA DE PEÇAS */
+        /* ========================= */
+
+        .lista-pecas {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 18px;
+
+        }
+
+
+        .peca {
+
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 18px;
+
+            min-height: 120px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
+        }
+
+
+        .imagem {
+
+            width: 95px;
+
+            height: 95px;
+
+            background: #f1f1f1;
+
+            border-radius: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 45px;
+
+        }
+
+
+        .informacoes {
+
+            flex: 1;
+
+        }
+
+
+        .informacoes h2 {
+
+            margin: 0 0 8px;
+
+            color: #444;
+
+        }
+
+
+        .informacoes p {
+
+            margin: 0;
+
+            color: #777;
+
+        }
+
+
+        .preco {
+
+            color: #20a94b;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+        }
+
+
+        .adicionar {
+
+            width: 55px;
+
+            height: 55px;
+
+            border: none;
+
+            border-radius: 18px;
+
+            background: #e1f9dc;
+
+            color: #26a84b;
+
+            font-size: 35px;
+
+            cursor: pointer;
+
+        }
+
+
+        .adicionar:hover {
+
+            background: #72dc50;
+
+            color: white;
+
+        }
+
+
+        /* ========================= */
+        /* CARRINHO */
+        /* ========================= */
+
+        .carrinho {
+
+            position: fixed;
+
+            bottom: 0;
+
+            left: 0;
+
+            right: 0;
+
+            background: white;
+
+            padding: 15px 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.12);
+
+        }
+
+
+        .carrinho-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .carrinho-icone {
+
+            font-size: 35px;
+
+        }
+
+
+        .carrinho p {
+
+            margin: 5px 0 0;
+
+            color: #777;
+
+        }
+
+
+        .ver-pedido {
+
+            border: none;
+
+            background: #27bd63;
+
+            color: white;
+
+            padding: 16px 35px;
+
+            border-radius: 15px;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* ========================= */
+        /* CELULAR */
+        /* ========================= */
+
+        @media (max-width: 900px) {
+
+            .topo {
+
+                height: auto;
+
+                padding: 20px;
+
+                flex-direction: column;
+
+                gap: 15px;
+
+            }
+
+
+            .menu {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+            }
+
+
+            .menu a {
+
+                font-size: 14px;
+
+                padding: 10px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================= -->
+    <!-- CABEÇALHO COM ABAS -->
+    <!-- ========================= -->
+
+    <header class="topo">
+
+
+        <!-- LOGO -->
+
+        <a href="/" class="logo">
+
+            🚗 Avalia
+
+        </a>
+
+
+        <!-- ABAS NO CANTO SUPERIOR DIREITO -->
+
+        <nav class="menu">
+
+
+            <a href="/">
+
+                🏠 Hub
+
+            </a>
+
+
+            <a href="/diagnostico">
+
+                🔧 Diagnóstico
+
+            </a>
+
+
+            <a href="/pecas" class="ativo">
+
+                ⚙ Peças
+
+            </a>
+
+
+            <a href="/mecanicos">
+
+                📍 Mecânicos
+
+            </a>
+
+
+            <a href="/tutoriais">
+
+                📚 Tutoriais
+
+            </a>
+
+
+        </nav>
+
+
+    </header>
+
+
+    <!-- ========================= -->
+    <!-- CONTEÚDO -->
+    <!-- ========================= -->
+
+    <main class="conteudo">
+
+
+        <h1 class="titulo">
+
+            Peças pro seu carro
+
+        </h1>
+
+
+        <!-- PESQUISA -->
+
+        <div class="pesquisa">
+
+
+            <input
+
+                type="text"
+
+                id="campoPesquisa"
+
+                placeholder="Pesquise uma peça para seu carro..."
+
+                onkeyup="pesquisar()">
+
+
+            <button onclick="pesquisar()">
+
+                🔍
+
+            </button>
+
+
+        </div>
+
+
+        <!-- CATEGORIAS -->
+
+        <div class="categorias">
+
+
+            <button class="categoria ativa">
+
+                ▦ Todas
+
+            </button>
+
+
+            <button class="categoria">
+
+                ⚙ Freios
+
+            </button>
+
+
+            <button class="categoria">
+
+                ▥ Filtros
+
+            </button>
+
+
+            <button class="categoria">
+
+                🛠 Suspensão
+
+            </button>
+
+
+            <button class="categoria">
+
+                🔋 Elétrica
+
+            </button>
+
+
+        </div>
+
+
+        <!-- LISTA DE PEÇAS -->
+
+        <section class="lista-pecas">
+
+
+            <div class="peca" data-nome="pastilha de freio">
+
+
+                <div class="imagem">
+
+                    🛞
+
+                </div>
+
+
+                <div class="informacoes">
+
+                    <h2>
+
+                        Pastilha de freio
+
+                    </h2>
+
+
+                    <p>
+
+                        Pastilha de freio automotiva
+
+                    </p>
+
+                </div>
+
+
+                <span class="preco">
+
+                    R$ 19,90
+
+                </span>
+
+
+                <button class="adicionar" onclick="adicionar(this)">
+
+                    +
+
+                </button>
+
+
+            </div>
+
+
+            <div class="peca" data-nome="filtro de oleo">
+
+
+                <div class="imagem">
+
+                    🛢️
+
+                </div>
+
+
+                <div class="informacoes">
+
+                    <h2>
+
+                        Filtro de óleo
+
+                    </h2>
+
+
+                    <p>
+
+                        Filtro de óleo automotivo
+
+                    </p>
+
+                </div>
+
+
+                <span class="preco">
+
+                    R$ 14,90
+
+                </span>
+
+
+                <button class="adicionar" onclick="adicionar(this)">
+
+                    +
+
+                </button>
+
+
+            </div>
+
+
+            <div class="peca" data-nome="vela de ignicao">
+
+
+                <div class="imagem">
+
+                    🔩
+
+                </div>
+
+
+                <div class="informacoes">
+
+                    <h2>
+
+                        Vela de ignição
+
+                    </h2>
+
+
+                    <p>
+
+                        Vela para motor automotivo
+
+                    </p>
+
+                </div>
+
+
+                <span class="preco">
+
+                    R$ 7,90
+
+                </span>
+
+
+                <button class="adicionar" onclick="adicionar(this)">
+
+                    +
+
+                </button>
+
+
+            </div>
+
+
+            <div class="peca" data-nome="lampada">
+
+
+                <div class="imagem">
+
+                    💡
+
+                </div>
+
+
+                <div class="informacoes">
+
+                    <h2>
+
+                        Lâmpada automotiva
+
+                    </h2>
+
+
+                    <p>
+
+                        Lâmpada para farol
+
+                    </p>
+
+                </div>
+
+
+                <span class="preco">
+
+                    R$ 5,90
+
+                </span>
+
+
+                <button class="adicionar" onclick="adicionar(this)">
+
+                    +
+
+                </button>
+
+
+            </div>
+
+
+            <div class="peca" data-nome="palheta">
+
+
+                <div class="imagem">
+
+                    🚘
+
+                </div>
+
+
+                <div class="informacoes">
+
+                    <h2>
+
+                        Palheta do limpador
+
+                    </h2>
+
+
+                    <p>
+
+                        Palheta para para-brisa
+
+                    </p>
+
+                </div>
+
+
+                <span class="preco">
+
+                    R$ 8,90
+
+                </span>
+
+
+                <button class="adicionar" onclick="adicionar(this)">
+
+                    +
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ========================= -->
+    <!-- CARRINHO -->
+    <!-- ========================= -->
+
+    <footer class="carrinho">
+
+
+        <div class="carrinho-info">
+
+
+            <span class="carrinho-icone">
+
+                🛍️
+
+            </span>
+
+
+            <div>
+
+                <strong>
+
+                    Seu pedido
+
+                </strong>
+
+
+                <p id="quantidade">
+
+                    Ainda sem itens
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <button class="ver-pedido">
+
+            Ver pedido
+
+        </button>
+
+
+    </footer>
+
+
+    <script>
+        function adicionar(botao) {
+            const peca = botao.closest(".peca");
+            const nome = peca.querySelector(".informacoes h2").innerText;
+            const precoTexto = peca.querySelector(".preco").innerText;
+
+            const preco = parseFloat(
+                precoTexto.replace("R$", "").trim().replace(/\./g, "").replace(",", ".")
+            );
+
+            let carrinho = JSON.parse(localStorage.getItem("avaliaCarrinho")) || [];
+            const produtoExistente = carrinho.find(produto => produto.nome === nome);
+
+            if (produtoExistente) {
+                produtoExistente.quantidade++;
+            } else {
+                carrinho.push({
+                    nome: nome,
+                    preco: preco,
+                    quantidade: 1
+                });
+            }
+
+            localStorage.setItem("avaliaCarrinho", JSON.stringify(carrinho));
+            atualizarQuantidade();
+            alert(nome + " foi adicionado ao carrinho!");
+        }
+
+        function atualizarQuantidade() {
+            let carrinho = JSON.parse(localStorage.getItem("avaliaCarrinho")) || [];
+            const quantidadeTotal = carrinho.reduce(
+                (total, produto) => total + Number(produto.quantidade || 0),
+                0
+            );
+
+            const elementoQuantidade = document.getElementById("quantidade");
+            elementoQuantidade.innerText = quantidadeTotal === 0
+                ? "Ainda sem itens"
+                : quantidadeTotal + " item(ns) no pedido";
+        }
+
+        function pesquisar() {
+            let texto = document.getElementById("campoPesquisa").value.toLowerCase();
+            let pecas = document.querySelectorAll(".peca");
+
+            pecas.forEach(function(peca) {
+                let nome = peca.getAttribute("data-nome");
+                peca.style.display = nome.includes(texto) ? "flex" : "none";
+            });
+        }
+
+        document.querySelector(".ver-pedido").addEventListener("click", function() {
+            window.location.href = "/carrinho";
+        });
+
+        atualizarQuantidade();
+    </script>
+
+
+</body>
+
+</html>
