@@ -1,6 +1,19 @@
 // esse script e o teste completo
 // ele mexe nos sliders, pega os valores do formulario e envia tudo pro backend pra IA fazer a previsao
 
+// true so quando os exames desta pagina ja foram analisados pela CNN no backend
+// (o resultado em si fica na sessao do servidor, aqui so guardamos se ele existe)
+let cnnDisponivel = false;
+
+// descarta o resultado da CNN (quando o usuario muda ou limpa a selecao de exames)
+function invalidarCNN() {
+    if (!cnnDisponivel) {
+        return;
+    }
+    cnnDisponivel = false;
+    fetch('/api/limpar_exames', {method: 'POST'}).catch(() => {});
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const idadeSlider = document.getElementById('idade-slider');
     const sesSlider = document.getElementById('ses-slider');
@@ -108,6 +121,9 @@ function configurarUploadExames() {
             status.textContent = 'O limite total é de 2 GB. A nova seleção não foi adicionada.';
             status.classList.add('is-error');
         } else {
+            if (candidates.length !== selectedFiles.length) {
+                invalidarCNN();
+            }
             selectedFiles = candidates;
             if (invalidCount > 0) {
                 status.textContent = `${invalidCount} arquivo(s) ignorado(s): formato não reconhecido.`;
@@ -145,6 +161,7 @@ function configurarUploadExames() {
     });
 
     clearButton.addEventListener('click', () => {
+        invalidarCNN();
         selectedFiles = [];
         status.textContent = '';
         status.classList.remove('is-error');
@@ -173,9 +190,14 @@ function configurarUploadExames() {
                 throw new Error(data.mensagem || 'Não foi possível enviar os exames.');
             }
 
-            selectedFiles = [];
+            // mantem a selecao na tela: o botao "limpar" passa a descartar tambem o resultado da CNN
+            cnnDisponivel = Boolean(data.analisado);
             status.textContent = data.mensagem;
+            if (!data.analisado) {
+                status.classList.add('is-error');
+            }
         } catch (error) {
+            invalidarCNN();
             status.textContent = error.message || 'Erro ao conectar com o servidor.';
             status.classList.add('is-error');
         } finally {
@@ -225,6 +247,18 @@ function enviarAnalise(event) {
         }
     }
     
+    // exames escolhidos mas nao enviados: sem esse aviso a CNN ficaria de fora sem o usuario perceber
+    const listaExames = document.getElementById('exam-file-list');
+    if (listaExames && listaExames.children.length > 0 && !cnnDisponivel) {
+        const seguir = confirm(
+            'Você selecionou exames de imagem, mas eles ainda não foram analisados ' +
+            '(clique em "Enviar exames" antes). Deseja continuar usando apenas os dados clínicos?'
+        );
+        if (!seguir) {
+            return;
+        }
+    }
+
     const dados = {
         genero: genero,
         idade: idade,
@@ -233,7 +267,8 @@ function enviarAnalise(event) {
         mmse: mmse,
         etiv: etiv,
         nwbv: nwbv,
-        asf: asf
+        asf: asf,
+        usar_cnn: cnnDisponivel
     };
     
     // Mostrar carregando
@@ -291,6 +326,48 @@ function enviarAnalise(event) {
     });
 }
 
+function escaparHtml(texto) {
+    return String(texto).replace(/[&<>"']/g, caractere => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[caractere]));
+}
+
+function rotuloResultado(resultado) {
+    return String(resultado).toUpperCase() === 'COM DEMENCIA' ? 'Com demência' : 'Saudável';
+}
+
+// mostra o resultado de cada modelo separado (RF e, se houver, a CNN)
+function montarDetalhesModelos(data) {
+    if (!data.rf) {
+        return '';
+    }
+
+    let html = `
+        <p><strong>🌲 Random Forest (dados clínicos):</strong>
+        ${rotuloResultado(data.rf.resultado)} — probabilidade de demência ${data.rf.prob_demencia}%</p>
+    `;
+
+    if (data.combinado && data.cnn) {
+        const probCnn = (data.cnn.prob_demencia * 100).toFixed(2);
+        html += `
+            <p><strong>🧠 CNN (${data.cnn.n_imagens} imagem(ns) de ressonância):</strong>
+            ${escaparHtml(data.cnn.rotulo)} (${data.cnn.confianca}%) — probabilidade de demência ${probCnn}%</p>
+        `;
+        if (data.pesos) {
+            html += `<p><small>Resultado final = média ponderada (RF ${Math.round(data.pesos.rf * 100)}% / CNN ${Math.round(data.pesos.cnn * 100)}%).</small></p>`;
+        }
+        if (data.divergencia) {
+            html += `
+                <div class="warning-box">
+                    <strong>⚠️ Os dois modelos divergem</strong>
+                    <p>Os dados clínicos e as imagens apontam para direções diferentes. Esse caso merece atenção especial na avaliação médica.</p>
+                </div>
+            `;
+        }
+    }
+    return html;
+}
+
 function exibirResultado(data, mmse) {
     const resultadoDiv = document.getElementById('resultado-analise');
     
@@ -302,12 +379,16 @@ function exibirResultado(data, mmse) {
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .toUpperCase();
+
+    const fonte = data.combinado
+        ? 'A combinação do modelo clínico (Random Forest) com a análise das imagens (CNN)'
+        : 'O modelo';
     
     if (resultadoNormalizado === 'COM DEMENCIA') {
         resultadoIaBox.innerHTML = `
             <div class="warning-box">
                 <strong>⚠️ Sinais Clínicos Detectados</strong>
-                <p>O modelo identificou sinais preliminares de alerta compatíveis com demência.</p>
+                <p>${fonte} identificou sinais preliminares de alerta compatíveis com demência.</p>
             </div>
         `;
     } else {
@@ -322,6 +403,18 @@ function exibirResultado(data, mmse) {
     confiancaBox.innerHTML = `
         <strong>ℹ️ Índice de Certeza Algorítmica:</strong> ${data.confianca}%
     `;
+
+    // caixa com o detalhe de cada modelo (criada aqui pra nn precisar mexer no teste.html)
+    let detalhesBox = document.getElementById('detalhes-modelos-box');
+    if (!detalhesBox) {
+        detalhesBox = document.createElement('div');
+        detalhesBox.id = 'detalhes-modelos-box';
+        detalhesBox.className = 'info-box';
+        confiancaBox.insertAdjacentElement('afterend', detalhesBox);
+    }
+    const detalhes = montarDetalhesModelos(data);
+    detalhesBox.innerHTML = detalhes;
+    detalhesBox.style.display = detalhes ? 'block' : 'none';
     
     resultadoDiv.style.display = 'block';
     
