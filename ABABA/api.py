@@ -20,6 +20,9 @@ import numpy as np
 import pandas as pd
 import joblib
 
+# CNN de ressonancia (fica no cnn_servico.py)
+import cnn_servico
+
 # Banco MySQL
 import mysql.connector
 from mysql.connector import Error
@@ -29,6 +32,7 @@ import hashlib
 from datetime import datetime
 from functools import wraps
 import os
+import time
 
 # ===== INICIALIZACAO DA APLICACAO =====
 # Cria a aplicacao Flask mesmo sem isso nn tem como registrar as rotas
@@ -92,6 +96,17 @@ except Exception as e:
     IMPUTACAO_MEDIANAS = {}
     COLUNAS_ESPERADAS = ['M/F', 'Age', 'Educ', 'SES', 'MMSE', 'eTIV', 'nWBV', 'ASF']
 
+# ============= CARREGAMENTO DA CNN =============
+# Mesma ideia do RF se der erro (sem tensorflow, sem o .keras etc) a API continua
+# de pe e a predicao funciona so com o Random Forest
+try:
+    cnn_servico.carregar()
+except Exception as e:
+    print(f"✗ CNN indisponivel (a API segue so com o Random Forest): {e}")
+
+# Quanto tempo (segundos) o resultado da CNN fica valido na sessao do usuario
+CNN_VALIDADE_SEGUNDOS = 30 * 60
+
 # ============= FUNCOES AUXILIARES =============
 def criptografar_senha(senha):
     """Cria um hash da senha pra nn salvar a senha pura no banco
@@ -144,6 +159,21 @@ def validar_intervalo_modelo(dados):
         return 'Gênero inválido. Use Masculino ou Feminino.'
 
     return None
+
+
+def cnn_da_sessao():
+    """Devolve o resultado da CNN guardado na sessao, ou None se nn existir ou ja venceu
+
+    A sessao do Flask e assinada, entao o usuario nn consegue inventar um resultado
+    de CNN pelo navegador (diferente de mandar as probabilidades no JSON)
+    """
+    guardado = session.get('cnn')
+    if not guardado:
+        return None
+    if time.time() - guardado.get('ts', 0) > CNN_VALIDADE_SEGUNDOS:
+        session.pop('cnn', None)
+        return None
+    return guardado.get('dados')
 
 
 def login_required(f):
@@ -291,7 +321,10 @@ def api_logout():
 
 @app.route('/api/enviar_exames', methods=['POST'])
 def api_enviar_exames():
-    """Recebe anexos de exames sem armazenar ou executar uma análise por imagem."""
+    """Recebe os JPEGs de ressonancia, roda a CNN e guarda o resultado na sessao
+
+    Os arquivos sao lidos so em memoria, nada e salvo em disco
+    """
     if 'user_id' not in session:
         return jsonify({'sucesso': False, 'mensagem': 'Faça login para enviar exames.'}), 401
 
@@ -334,15 +367,54 @@ def api_enviar_exames():
                 'mensagem': 'O limite total de arquivos por envio é de 2 GB.'
             }), 413
 
+    # Sem CNN carregada: mantem o comportamento antigo (valida e recebe, mas nn analisa)
+    if not cnn_servico.disponivel():
+        session.pop('cnn', None)
+        return jsonify({
+            'sucesso': True,
+            'recebido': True,
+            'analisado': False,
+            'mensagem': (
+                f'{len(arquivos)} arquivo(s) recebido(s), mas a CNN não está carregada no servidor. '
+                'Nenhuma análise por imagem foi feita; os arquivos não foram salvos pela aplicação.'
+            )
+        })
+
+    try:
+        # generator: le uma imagem por vez pra nn carregar ate 2 GB na memoria de uma vez
+        resultado_cnn = cnn_servico.analisar_imagens(a.stream.read() for a in arquivos)
+    except ValueError as e:
+        return jsonify({'sucesso': False, 'mensagem': str(e)}), 400
+    except Exception as e:
+        print(f"Erro na CNN: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'sucesso': False, 'mensagem': f'Erro ao analisar as imagens: {e}'}), 500
+
+    session['cnn'] = {'dados': resultado_cnn, 'ts': time.time()}
+
+    mensagem = (
+        f"{resultado_cnn['n_imagens']} imagem(ns) analisada(s) pela CNN: "
+        f"{resultado_cnn['rotulo']} ({resultado_cnn['confianca']}%). "
+        'Esse resultado será combinado com a análise clínica. Os arquivos não foram salvos pela aplicação.'
+    )
+    if resultado_cnn['n_falhas']:
+        mensagem += f" {resultado_cnn['n_falhas']} arquivo(s) não puderam ser lidos e foram ignorados."
+
     return jsonify({
         'sucesso': True,
         'recebido': True,
-        'analisado': False,
-        'mensagem': (
-            f'{len(arquivos)} arquivo(s) recebido(s). Nenhuma análise por CNN foi feita; '
-            'os arquivos não foram salvos pela aplicação.'
-        )
+        'analisado': True,
+        'cnn': resultado_cnn,
+        'mensagem': mensagem
     })
+
+
+@app.route('/api/limpar_exames', methods=['POST'])
+def api_limpar_exames():
+    """Descarta o resultado da CNN guardado na sessao (botao limpar do frontend)"""
+    session.pop('cnn', None)
+    return jsonify({'sucesso': True})
 
 # ============= APIs DE PREDICAO =============
 # Esse bloco recebe os dados do formulario clinico e usa o modelo treinado pra responder
@@ -353,6 +425,8 @@ def api_prever():
 
     Recebe idade escolaridade gênero SES MMSE eTIV NWBV e ASF
     monta o DataFrame na ordem certa e manda pro scaler e pro modelo
+    Se o frontend mandar usar_cnn=true e houver um exame na sessao, o resultado final
+    vira a media ponderada do Random Forest com a CNN (senao e so o Random Forest)
     """
     if modelo is None or scaler is None:
         return jsonify({'sucesso': False, 'mensagem': 'Modelo nao carregado'}), 500
@@ -422,15 +496,40 @@ def api_prever():
         dados_escala = scaler.transform(dados_imputados)
         previsao = modelo.predict(dados_escala)
         probabilidade = modelo.predict_proba(dados_escala)
-        confianca = np.max(probabilidade) * 100
-        
-        resultado = "COM DEMENCIA" if previsao[0] == 1 else "SAUDAVEL"
-        
+        prob_rf = float(probabilidade[0][list(modelo.classes_).index(1)])  # P(demencia) do RF
+        resultado_rf = "COM DEMENCIA" if previsao[0] == 1 else "SAUDAVEL"
+
+        # A CNN so entra se o frontend pediu (usar_cnn) E existe um exame recente na sessao
+        # Sem isso (ex: teste rapido) tudo funciona igual a antes, so com o RF
+        info_cnn = cnn_da_sessao() if data.get('usar_cnn') else None
+        combinado = info_cnn is not None
+        divergencia = False
+
+        if combinado:
+            prob_final = cnn_servico.combinar(prob_rf, info_cnn['prob_demencia'])
+            divergencia = (prob_rf >= 0.5) != (info_cnn['prob_demencia'] >= 0.5)
+            resultado = "COM DEMENCIA" if prob_final >= 0.5 else "SAUDAVEL"
+            confianca = max(prob_final, 1.0 - prob_final) * 100
+        else:
+            resultado = resultado_rf
+            confianca = float(np.max(probabilidade)) * 100
+
         return jsonify({
             'sucesso': True,
             'resultado': resultado,
             'confianca': round(confianca, 2),
-            'mmse': mmse
+            'mmse': mmse,
+            'combinado': combinado,
+            'divergencia': divergencia,
+            'rf': {
+                'resultado': resultado_rf,
+                'prob_demencia': round(prob_rf * 100, 2)
+            },
+            'cnn': info_cnn,
+            'pesos': {
+                'rf': round(1 - cnn_servico.PESO_CNN, 2),
+                'cnn': round(cnn_servico.PESO_CNN, 2)
+            } if combinado else None
         })
     except ValueError as e:
         return jsonify({'sucesso': False, 'mensagem': f'Erro ao converter valores numericos: {str(e)}'}), 400
